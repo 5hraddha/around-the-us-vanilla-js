@@ -1,0 +1,19 @@
+.element__like-btn {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  max-width: 21px;
+  min-height: 19px;
+  background-image: url(../../../images/heart.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+  border: none;
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.element__like-btn:hover {
+  cursor: pointer;
+  opacity: .5;
+}
