@@ -11,7 +11,7 @@
   background-image: url(../../../images/add.svg);
   background-repeat: no-repeat;
   background-position: center;
-  cursor: pointer;
+  transition: all .3s ease-in-out;
 }
 
 .profile__add-btn:hover {
