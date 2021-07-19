@@ -10,7 +10,11 @@
   background-image: url(../../../images/edit.svg);
   background-repeat: no-repeat;
   background-position: center;
+}
+
+.profile__edit-btn:hover {
   cursor: pointer;
+  opacity: .6;
 }
 
 @media screen and (max-width: 768px) {
