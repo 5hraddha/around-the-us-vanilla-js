@@ -20,6 +20,18 @@
 
     <!-- main content of the page -->
     <main class="content">
+
+      <!-- edit profile popup box -->
+      <div class="popup">
+        <form class="popup__container" action="#">
+          <h2 class="popup__title">Edit profile</h2>
+          <input class="popup__input" type="text" id="name" placeholder="Name" required>
+          <input class="popup__input" type="text" id="about-me" placeholder="About me" required>
+          <input class="popup__submit" type="submit" value="Save">
+          <img class="popup__close-btn" src="images/popup-close.svg" alt="close icon for popup">
+        </form>
+      </div>
+
       <!-- section containing user info, functionality to edit it and to add new images -->
       <section class="profile">
         <img class="profile__avatar" src="images/profile-avatar.jpeg" alt="profile picture">
