@@ -10,9 +10,6 @@ const popupFormEle = document.querySelector(".popup__container");
 const popupNameInputEle = document.querySelector("#name");
 const popupAboutInputEle = document.querySelector("#about-me");
 
-//Select all Like buttons from Cards
-const likeBtnList = document.querySelectorAll(".element__like-btn");
-
 function popupOpen(){
   popupNameInputEle.value = profileTitleEle.textContent;
   popupAboutInputEle.value = profileSubtitleEle.textContent;
@@ -28,16 +25,11 @@ profileEditBtn.addEventListener("click", popupOpen);
 popupCloseBtn.addEventListener("click", popupClose);
 
 //Submit Edit Profile form data and update the respective values in the Profile
-popupFormEle.addEventListener("submit", function(e){
+function handleFormSubmit(e){
   e.preventDefault();
   profileTitleEle.textContent = popupNameInputEle.value;
   profileSubtitleEle.textContent = popupAboutInputEle.value;
   popupClose();
-});
-
-//Add eventListener to all the Like buttons
-for(let i=0; i<likeBtnList.length; i++){
-  likeBtnList[i].addEventListener("click", function(){
-    likeBtnList[i].classList.toggle("element__like-btn_active");
-  })
 }
+
+popupFormEle.addEventListener("submit", handleFormSubmit);
