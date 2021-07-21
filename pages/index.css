@@ -22,9 +22,6 @@
 @import url(../blocks/profile/__subtitle/profile__subtitle.css);
 @import url(../blocks/profile/__title/profile__title.css);
 
-/* stylesheets for the block - cards */
-@import url(../blocks/cards/cards.css);
-
 /* stylesheets for the block - elements */
 @import url(../blocks/elements/elements.css);
 
