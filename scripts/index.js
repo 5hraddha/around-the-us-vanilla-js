@@ -6,7 +6,7 @@ const profileSubtitleEle = document.querySelector(".profile__subtitle");
 //Select required DOM Elements from Edit Profile Popup
 const popupEle = document.querySelector(".popup");
 const popupCloseBtn = document.querySelector(".popup__close-btn");
-const popupFormEle = document.querySelector(".popup__container");
+const popupFormEle = document.querySelector(".popup__form");
 const popupNameInputEle = document.querySelector("#name");
 const popupAboutInputEle = document.querySelector("#about-me");
 
