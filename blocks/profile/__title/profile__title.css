@@ -2,19 +2,26 @@
   box-sizing: border-box;
   margin: 0 0 8px;
   padding: 0;
+  width: 100%;
+  max-width: 375px;
   font-size: 42px;
   font-weight: 500;
   line-height: 1.143;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 @media screen and (max-width: 768px) {
   .profile__title {
+    max-width: 380px;
     margin: 0 0 7px;
   }
 }
 
 @media screen and (max-width: 600px) {
   .profile__title {
+    max-width: 287px;
     font-size: 32px;
     line-height: 1.21;
   }
@@ -22,6 +29,7 @@
 
 @media screen and (max-width: 425px) {
   .profile__title {
+    max-width: 196px;
     font-size: 22px;
   }
 }
