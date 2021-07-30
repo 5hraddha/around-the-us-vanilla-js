@@ -2,16 +2,24 @@
 const profileEditBtn = document.querySelector(".profile__edit-btn");
 const profileTitleEle = document.querySelector(".profile__title");
 const profileSubtitleEle = document.querySelector(".profile__subtitle");
+const profileAddPlaceBtn = document.querySelector(".profile__add-btn");
 
 //Select required DOM Elements from Card Elements
 const cardEleContainer = document.querySelector(".elements");
 
 //Select required DOM Elements from Edit Profile Popup
-const popupEle = document.querySelector(".popup");
-const popupCloseBtn = document.querySelector(".popup__close-btn");
-const popupFormEle = document.querySelector(".popup__form");
-const popupNameInputEle = document.querySelector("#name");
-const popupAboutInputEle = document.querySelector("#about-me");
+const profilePopupEle = document.querySelector(".popup_rel_profile");
+const profilePopupCloseBtn = document.querySelector(".popup__close-btn_rel_profile");
+const profilePopupFormEle = document.querySelector(".popup__form_rel_profile");
+const profilePopupNameInputEle = document.querySelector("#profile-name");
+const profilePopupAboutInputEle = document.querySelector("#profile-about-me");
+
+//Select required DOM Elements from Add New Place Popup
+const placePopupEle = document.querySelector(".popup_rel_place");
+const placePopupCloseBtn = document.querySelector(".popup__close-btn_rel_place");
+const placePopupFormEle = document.querySelector(".popup__form_rel_place");
+const placePopupNameInputEle = document.querySelector("#place-name");
+const placePopupLinkInputEle = document.querySelector("#place-image-link");
 
 // Initial Cards to load while the page loads
 const initialCards = [
@@ -41,31 +49,13 @@ const initialCards = [
   }
 ];
 
-const popupOpen = () => {
-  popupNameInputEle.value = profileTitleEle.textContent;
-  popupAboutInputEle.value = profileSubtitleEle.textContent;
-  popupEle.classList.add("popup_opened");
-}
-
-const popupClose = () => {
-  popupEle.classList.remove("popup_opened");
-}
-
-//Submit Edit Profile form data and update the respective values in the Profile
-const handleFormSubmit = e => {
-  e.preventDefault();
-  profileTitleEle.textContent = popupNameInputEle.value;
-  profileSubtitleEle.textContent = popupAboutInputEle.value;
-  popupClose();
-}
-
 //Create card element using the template before adding to DOM
 const createCardElement = (title, link) => {
   const cardTemplateContent = document.querySelector("#element-template").content;
   const newCardEle = cardTemplateContent.querySelector(".element").cloneNode(true);
   const cardImgEle = newCardEle.querySelector(".element__img");
   const cardTitleEle = newCardEle.querySelector(".element__title");
-  const cardLikeBtn = newCardEle.querySelector(".element__like-btn");
+  // const cardLikeBtn = newCardEle.querySelector(".element__like-btn");
 
   cardImgEle.src = link;
   cardImgEle.alt = title;
@@ -80,12 +70,50 @@ const addCardElement = (title, link) => {
   cardEleContainer.prepend(cardElement);
 }
 
-//Add intial cards on page load
-initialCards.forEach(card => addCardElement(card.name, card.link));
+//Open the popup
+const popupOpen = (popup) => {
+  popup.classList.add("popup_opened");
+}
+
+//Close the opened popup
+const popupClose = () => {
+  document.querySelector(".popup_opened").classList.remove("popup_opened");
+}
+
+//Open Edit Profile form
+const editProfile = () => {
+  profilePopupNameInputEle.value = profileTitleEle.textContent;
+  profilePopupAboutInputEle.value = profileSubtitleEle.textContent;
+  popupOpen(profilePopupEle);
+}
+
+//Submit Edit Profile form data and update the respective values in the Profile
+const submitProfile = e => {
+  e.preventDefault();
+  profileTitleEle.textContent = profilePopupNameInputEle.value;
+  profileSubtitleEle.textContent = profilePopupAboutInputEle.value;
+  popupClose();
+}
+
+//Open Add New Place form
+const addPlace = () => {
+  popupOpen(placePopupEle);
+}
+
+//Submit Add New place form data and add a new card in the beginning
+const submitNewPlace = e => {
+  e.preventDefault();
+  addCardElement(placePopupNameInputEle.value, placePopupLinkInputEle.value);
+  popupClose();
+}
 
 //Add Event Listeners
-// Open and Close the Edit Profile Popup
-profileEditBtn.addEventListener("click", popupOpen);
-popupCloseBtn.addEventListener("click", popupClose);
+profileEditBtn.addEventListener("click", editProfile);
+profilePopupCloseBtn.addEventListener("click", popupClose);
+profilePopupFormEle.addEventListener("submit", submitProfile);
+profileAddPlaceBtn.addEventListener("click", addPlace);
+placePopupCloseBtn.addEventListener("click", popupClose);
+placePopupFormEle.addEventListener("submit", submitNewPlace);
 
-popupFormEle.addEventListener("submit", handleFormSubmit);
+//Add intial cards on page load
+initialCards.forEach(card => addCardElement(card.name, card.link));
