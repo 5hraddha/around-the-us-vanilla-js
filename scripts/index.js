@@ -49,11 +49,6 @@ const initialCards = [
   }
 ];
 
-//Like or Unlike an image
-const likeUnlikeImage = e => {
-  e.target.classList.toggle("element__like-btn_active");
-}
-
 //Create card element using the template before adding to DOM
 const createCardElement = (title, link) => {
   const cardTemplateContent = document.querySelector("#element-template").content;
@@ -61,11 +56,20 @@ const createCardElement = (title, link) => {
   const cardImgEle = newCardEle.querySelector(".element__img");
   const cardTitleEle = newCardEle.querySelector(".element__title");
   const cardLikeBtn = newCardEle.querySelector(".element__like-btn");
+  const cardDeleteBtn = newCardEle.querySelector(".element__delete-btn");
 
   cardImgEle.src = link;
   cardImgEle.alt = title;
   cardTitleEle.textContent = title;
-  cardLikeBtn.addEventListener("click", likeUnlikeImage);
+
+  cardLikeBtn.addEventListener("click", e => {
+    e.target.classList.toggle("element__like-btn_active");
+  });
+
+  cardDeleteBtn.addEventListener("click", e => {
+    const cardToDeleteEle = e.target.closest(".element");
+    cardToDeleteEle.remove();
+  });
 
   return newCardEle;
 }
