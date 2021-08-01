@@ -1,8 +1,12 @@
 # Project: Around The U.S.
 ## About the Project
 **Around the U.S.** is a responsive website where a user can have a collection of the pictures of his journey around the US. As of now, the functionalities available on the webpage are:
-1. User can edit and save his profile details. The updated data will be reflected in the webpage but will be lost while page reload.
-2. User can like the images. As of now, the likes will not persist on page reload.
+1. When the page loads, there are six cards intially.
+2. User can edit and save his profile details. The updated data will be reflected in the webpage but will be lost while page reload.
+3. User can like the images. As of now, the likes will not persist on page reload.
+4. User can add a new card with the title and the link for image. As of now, the newly added card will not persist on page reload.
+5. User can delete any card if he wishes to.
+6. User can also have a closer look of the images by clicking on them.
 
 ## Technologies and Standards Used
 **The technologies that have been used are:**
@@ -37,7 +41,7 @@ You can view the product specification document [here](https://www.figma.com/fil
 
 ## Future Improvements
 1. The data on the webpage should persist between page reloads.
-2. The user should have ability to add pictures.
+2. The user should have ability to add pictures - Done.
 
 ## Demo
 [Enjoy the live project](https://5hraddha.github.io/web_project_4/)
