@@ -14,7 +14,7 @@
   background-position: top;
   border: none;
   background-color: transparent;
-  transition: all .3s ease-in-out
+  transition: all .3s ease-in-out;
 }
 
 .element__delete-btn:hover {
