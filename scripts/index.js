@@ -21,11 +21,15 @@ const placePopupFormEle = document.querySelector(".popup__form_rel_place");
 const placePopupNameInputEle = document.querySelector("#place-name");
 const placePopupLinkInputEle = document.querySelector("#place-image-link");
 
+//Select required DOM Elements from View Image Popup
+const imgPopupEle = document.querySelector(".popup_rel_image");
+const imgPopupCloseBtn = document.querySelector(".popup__close-btn_rel_image");
+
 // Initial Cards to load while the page loads
 const initialCards = [
   {
     name: "Antelope Canyon",
-    link: "./images/antelope-canyon-arizona.jpeg"
+    link: "./images/antelope-canyon-arizona.jpg"
   },
   {
     name: "Cape Hatteras Lighthouse",
@@ -49,6 +53,27 @@ const initialCards = [
   }
 ];
 
+//Open the popup
+const popupOpen = (popup) => {
+  popup.classList.add("popup_opened");
+}
+
+//Close the opened popup
+const popupClose = () => {
+  document.querySelector(".popup_opened").classList.remove("popup_opened");
+}
+
+//Open View Image popup
+const viewImage = e => {
+  const popupImgEle = document.querySelector(".popup__img");
+  const popupCaptionEle = document.querySelector(".popup__caption");
+
+  popupOpen(imgPopupEle);
+  popupImgEle.src = e.target.src;
+  popupImgEle.alt = e.target.alt;
+  popupCaptionEle.textContent = e.target.alt;
+}
+
 //Create card element using the template before adding to DOM
 const createCardElement = (title, link) => {
   const cardTemplateContent = document.querySelector("#element-template").content;
@@ -71,6 +96,8 @@ const createCardElement = (title, link) => {
     cardToDeleteEle.remove();
   });
 
+  cardImgEle.addEventListener("click", viewImage);
+
   return newCardEle;
 }
 
@@ -78,16 +105,6 @@ const createCardElement = (title, link) => {
 const addCardElement = (title, link) => {
   const cardElement = createCardElement(title, link);
   cardEleContainer.prepend(cardElement);
-}
-
-//Open the popup
-const popupOpen = (popup) => {
-  popup.classList.add("popup_opened");
-}
-
-//Close the opened popup
-const popupClose = () => {
-  document.querySelector(".popup_opened").classList.remove("popup_opened");
 }
 
 //Open Edit Profile form
@@ -124,6 +141,7 @@ profilePopupFormEle.addEventListener("submit", submitProfile);
 profileAddPlaceBtn.addEventListener("click", addPlace);
 placePopupCloseBtn.addEventListener("click", popupClose);
 placePopupFormEle.addEventListener("submit", submitNewPlace);
+imgPopupCloseBtn.addEventListener("click", popupClose);
 
 //Add intial cards on page load
 initialCards.forEach(card => addCardElement(card.name, card.link));
