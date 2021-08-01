@@ -54,12 +54,12 @@ const initialCards = [
 ];
 
 //Open the popup
-const popupOpen = (popup) => {
+const openPopup = (popup) => {
   popup.classList.add("popup_opened");
 }
 
 //Close the opened popup
-const popupClose = () => {
+const closePopup = () => {
   document.querySelector(".popup_opened").classList.remove("popup_opened");
 }
 
@@ -68,7 +68,7 @@ const viewImage = e => {
   const popupImgEle = document.querySelector(".popup__img");
   const popupCaptionEle = document.querySelector(".popup__caption");
 
-  popupOpen(imgPopupEle);
+  openPopup(imgPopupEle);
   popupImgEle.src = e.target.src;
   popupImgEle.alt = e.target.alt;
   popupCaptionEle.textContent = e.target.alt;
@@ -111,7 +111,7 @@ const addCardElement = (title, link) => {
 const editProfile = () => {
   profilePopupNameInputEle.value = profileTitleEle.textContent;
   profilePopupAboutInputEle.value = profileSubtitleEle.textContent;
-  popupOpen(profilePopupEle);
+  openPopup(profilePopupEle);
 }
 
 //Submit Edit Profile form data and update the respective values in the Profile
@@ -119,29 +119,29 @@ const submitProfile = e => {
   e.preventDefault();
   profileTitleEle.textContent = profilePopupNameInputEle.value;
   profileSubtitleEle.textContent = profilePopupAboutInputEle.value;
-  popupClose();
+  closePopup();
 }
 
 //Open Add New Place form
 const addPlace = () => {
-  popupOpen(placePopupEle);
+  openPopup(placePopupEle);
 }
 
 //Submit Add New place form data and add a new card in the beginning
 const submitNewPlace = e => {
   e.preventDefault();
   addCardElement(placePopupNameInputEle.value, placePopupLinkInputEle.value);
-  popupClose();
+  closePopup();
 }
 
 //Add Event Listeners
 profileEditBtn.addEventListener("click", editProfile);
-profilePopupCloseBtn.addEventListener("click", popupClose);
+profilePopupCloseBtn.addEventListener("click", closePopup);
 profilePopupFormEle.addEventListener("submit", submitProfile);
 profileAddPlaceBtn.addEventListener("click", addPlace);
-placePopupCloseBtn.addEventListener("click", popupClose);
+placePopupCloseBtn.addEventListener("click", closePopup);
 placePopupFormEle.addEventListener("submit", submitNewPlace);
-imgPopupCloseBtn.addEventListener("click", popupClose);
+imgPopupCloseBtn.addEventListener("click", closePopup);
 
 //Add intial cards on page load
 initialCards.forEach(card => addCardElement(card.name, card.link));
