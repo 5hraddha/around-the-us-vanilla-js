@@ -37,7 +37,7 @@
   We are using [Git Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/). It provides an easy set of rules for creating an explicit commit history making it easier for people to contribute to our projects by communicating the nature of changes clearly.
 
 ## Product Specification Document
-You can view the product specification document [here](https://www.figma.com/file/SurN1jaeEQIhuZEDMhmWWf/Sprint-4-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+You can view the product specification document [here](https://www.figma.com/file/m79HxYeZpOXRw0Tz2eZGOV/Sprint-5-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
 
 ## Future Improvements
 1. The data on the webpage should persist between page reloads.

@@ -6,6 +6,7 @@
   height: 282px;
   object-fit: fill;
   object-position: center;
+  color: #000;
 }
 
 .element__img:hover{

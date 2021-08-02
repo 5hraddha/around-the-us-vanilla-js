@@ -1,149 +1,122 @@
 //Select required DOM Elements from Profile
 const profileEditBtn = document.querySelector(".profile__edit-btn");
-const profileTitleEle = document.querySelector(".profile__title");
-const profileSubtitleEle = document.querySelector(".profile__subtitle");
+const profileTitle = document.querySelector(".profile__title");
+const profileSubtitle = document.querySelector(".profile__subtitle");
 const profileAddPlaceBtn = document.querySelector(".profile__add-btn");
 
 //Select required DOM Elements from Card Elements
-const cardEleContainer = document.querySelector(".elements");
+const cardContainer = document.querySelector(".elements");
 
 //Select required DOM Elements from Edit Profile Popup
-const profilePopupEle = document.querySelector(".popup_rel_profile");
+const profilePopup = document.querySelector(".popup_rel_profile");
 const profilePopupCloseBtn = document.querySelector(".popup__close-btn_rel_profile");
-const profilePopupFormEle = document.querySelector(".popup__form_rel_profile");
-const profilePopupNameInputEle = document.querySelector("#profile-name");
-const profilePopupAboutInputEle = document.querySelector("#profile-about-me");
+const profilePopupForm = document.querySelector(".popup__form_rel_profile");
+const profilePopupNameInput = document.querySelector("#profile-name");
+const profilePopupAboutInput = document.querySelector("#profile-about-me");
 
 //Select required DOM Elements from Add New Place Popup
-const placePopupEle = document.querySelector(".popup_rel_place");
+const placePopup = document.querySelector(".popup_rel_place");
 const placePopupCloseBtn = document.querySelector(".popup__close-btn_rel_place");
-const placePopupFormEle = document.querySelector(".popup__form_rel_place");
-const placePopupNameInputEle = document.querySelector("#place-name");
-const placePopupLinkInputEle = document.querySelector("#place-image-link");
+const placePopupForm = document.querySelector(".popup__form_rel_place");
+const placePopupNameInput = document.querySelector("#place-name");
+const placePopupLinkInput = document.querySelector("#place-image-link");
 
 //Select required DOM Elements from View Image Popup
-const imgPopupEle = document.querySelector(".popup_rel_image");
+const imgPopup = document.querySelector(".popup_rel_image");
 const imgPopupCloseBtn = document.querySelector(".popup__close-btn_rel_image");
+const popupImg = document.querySelector(".popup__img");
+const popupCaption = document.querySelector(".popup__caption");
 
-// Initial Cards to load while the page loads
-const initialCards = [
-  {
-    name: "Antelope Canyon",
-    link: "./images/antelope-canyon-arizona.jpg"
-  },
-  {
-    name: "Cape Hatteras Lighthouse",
-    link: "./images/cape-hatteras-lighthouse-north-carolina.jpeg"
-  },
-  {
-    name: "Shenandoah National Park",
-    link: "./images/shenandoah-national-park.jpeg"
-  },
-  {
-    name: "Big Sur",
-    link: "./images/big-sur-california.jpeg"
-  },
-  {
-    name: "Killington Vermont",
-    link: "./images/killington-vermont.jpeg"
-  },
-  {
-    name: "Key West",
-    link: "./images/key-west-florida.jpeg"
-  }
-];
+//Select required DOM Elements from Card Template
+const cardTemplateContent = document.querySelector("#element-template").content;
 
 //Open the popup
-const openPopup = (popup) => {
+const openPopup = popup => {
   popup.classList.add("popup_opened");
 }
 
 //Close the opened popup
-const closePopup = () => {
-  document.querySelector(".popup_opened").classList.remove("popup_opened");
+const closePopup = popup => {
+  popup.classList.remove("popup_opened");
 }
 
 //Open View Image popup
 const viewImage = e => {
-  const popupImgEle = document.querySelector(".popup__img");
-  const popupCaptionEle = document.querySelector(".popup__caption");
-
-  openPopup(imgPopupEle);
-  popupImgEle.src = e.target.src;
-  popupImgEle.alt = e.target.alt;
-  popupCaptionEle.textContent = e.target.alt;
+  openPopup(imgPopup);
+  popupImg.src = e.target.src;
+  popupImg.alt = e.target.alt;
+  popupCaption.textContent = e.target.alt;
 }
 
 //Create card element using the template before adding to DOM
 const createCardElement = (title, link) => {
-  const cardTemplateContent = document.querySelector("#element-template").content;
-  const newCardEle = cardTemplateContent.querySelector(".element").cloneNode(true);
-  const cardImgEle = newCardEle.querySelector(".element__img");
-  const cardTitleEle = newCardEle.querySelector(".element__title");
-  const cardLikeBtn = newCardEle.querySelector(".element__like-btn");
-  const cardDeleteBtn = newCardEle.querySelector(".element__delete-btn");
+  const newCard = cardTemplateContent.querySelector(".element").cloneNode(true);
+  const cardImg = newCard.querySelector(".element__img");
+  const cardTitle = newCard.querySelector(".element__title");
+  const cardLikeBtn = newCard.querySelector(".element__like-btn");
+  const cardDeleteBtn = newCard.querySelector(".element__delete-btn");
 
-  cardImgEle.src = link;
-  cardImgEle.alt = title;
-  cardTitleEle.textContent = title;
+  cardImg.src = link;
+  cardImg.alt = title;
+  cardTitle.textContent = title;
 
   cardLikeBtn.addEventListener("click", e => {
     e.target.classList.toggle("element__like-btn_active");
   });
 
   cardDeleteBtn.addEventListener("click", e => {
-    const cardToDeleteEle = e.target.closest(".element");
-    cardToDeleteEle.remove();
+    const cardToDelete = e.target.closest(".element");
+    cardToDelete.remove();
   });
 
-  cardImgEle.addEventListener("click", viewImage);
+  cardImg.addEventListener("click", viewImage);
 
-  return newCardEle;
+  return newCard;
 }
 
 //Add card element to DOM
 const addCardElement = (title, link) => {
-  const cardElement = createCardElement(title, link);
-  cardEleContainer.prepend(cardElement);
+  const card = createCardElement(title, link);
+  cardContainer.prepend(card);
 }
 
 //Open Edit Profile form
 const editProfile = () => {
-  profilePopupNameInputEle.value = profileTitleEle.textContent;
-  profilePopupAboutInputEle.value = profileSubtitleEle.textContent;
-  openPopup(profilePopupEle);
+  profilePopupNameInput.value = profileTitle.textContent;
+  profilePopupAboutInput.value = profileSubtitle.textContent;
+  openPopup(profilePopup);
 }
 
 //Submit Edit Profile form data and update the respective values in the Profile
 const submitProfile = e => {
   e.preventDefault();
-  profileTitleEle.textContent = profilePopupNameInputEle.value;
-  profileSubtitleEle.textContent = profilePopupAboutInputEle.value;
-  closePopup();
+  profileTitle.textContent = profilePopupNameInput.value;
+  profileSubtitle.textContent = profilePopupAboutInput.value;
+  closePopup(profilePopup);
 }
 
 //Open Add New Place form
-const addPlace = () => {
-  placePopupNameInputEle.value = "";
-  placePopupLinkInputEle.value = "";
-  openPopup(placePopupEle);
+const openAddPlacePopup = () => {
+  placePopupNameInput.value = "";
+  placePopupLinkInput.value = "";
+  openPopup(placePopup);
 }
 
 //Submit Add New place form data and add a new card in the beginning
 const submitNewPlace = e => {
   e.preventDefault();
-  addCardElement(placePopupNameInputEle.value, placePopupLinkInputEle.value);
-  closePopup();
+  addCardElement(placePopupNameInput.value, placePopupLinkInput.value);
+  closePopup(placePopup);
 }
 
 //Add Event Listeners
 profileEditBtn.addEventListener("click", editProfile);
-profilePopupCloseBtn.addEventListener("click", closePopup);
-profilePopupFormEle.addEventListener("submit", submitProfile);
-profileAddPlaceBtn.addEventListener("click", addPlace);
-placePopupCloseBtn.addEventListener("click", closePopup);
-placePopupFormEle.addEventListener("submit", submitNewPlace);
-imgPopupCloseBtn.addEventListener("click", closePopup);
+profilePopupCloseBtn.addEventListener("click", () => closePopup(profilePopup));
+profilePopupForm.addEventListener("submit", submitProfile);
+profileAddPlaceBtn.addEventListener("click", openAddPlacePopup);
+placePopupCloseBtn.addEventListener("click", () => closePopup(placePopup));
+placePopupForm.addEventListener("submit", submitNewPlace);
+imgPopupCloseBtn.addEventListener("click", () => closePopup(imgPopup));
 
 //Add intial cards on page load
 initialCards.forEach(card => addCardElement(card.name, card.link));
