@@ -124,6 +124,8 @@ const submitProfile = e => {
 
 //Open Add New Place form
 const addPlace = () => {
+  placePopupNameInputEle.value = "";
+  placePopupLinkInputEle.value = "";
   openPopup(placePopupEle);
 }
 
