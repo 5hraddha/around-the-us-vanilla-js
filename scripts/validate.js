@@ -1,17 +1,18 @@
+// Reset Form Validation
+const resetFormValidation = form => {
+  form.reset();
+}
+
 // Check if all the Input Elements are valid at the moment
 const hasInvalidInput = inputList => 
   inputList.some(inputElement => !inputElement.validity.valid);
 
 // Toggle the state of the Submit button
-const toggleButtonState = (buttonElement, inputList, { inactiveButtonClass }) => {
+const toggleButtonState = (buttonElement, inputList, inactiveButtonClass) => {
   if(hasInvalidInput(inputList)){
-    console.log("if - The inputList has invalid value" + hasInvalidInput(inputList));
-    console.log(inputList);
     buttonElement.disabled = true;
     buttonElement.classList.add(inactiveButtonClass);
   } else {
-    console.log("else - The inputList has invalid value" + hasInvalidInput(inputList));
-    console.log(inputList);
     buttonElement.disabled = false;
     buttonElement.classList.remove(inactiveButtonClass);
   }
@@ -50,11 +51,11 @@ const setEventListeners = (formElement, settings) => {
   const inputList = [...formElement.querySelectorAll(inputSelector)];
   const buttonElement = formElement.querySelector(submitButtonSelector);
 
-  toggleButtonState(buttonElement, inputList, settings);
+  toggleButtonState(buttonElement, inputList, settings.inactiveButtonClass);
   inputList.forEach( inputElement => 
     inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement, settings);
-      toggleButtonState(buttonElement, inputList, settings);
+      toggleButtonState(buttonElement, inputList, settings.inactiveButtonClass);
     }));
 }
 

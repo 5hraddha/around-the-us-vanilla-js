@@ -9,23 +9,27 @@ const cardContainer = document.querySelector(".elements");
 
 //Select required DOM Elements from Edit Profile Popup
 const profilePopup = document.querySelector(".popup_rel_profile");
-const profilePopupCloseBtn = document.querySelector(".popup__close-btn_rel_profile");
-const profilePopupForm = document.querySelector(".popup__form_rel_profile");
-const profilePopupNameInput = document.querySelector("#name-input");
-const profilePopupAboutInput = document.querySelector("#about-input");
+const profilePopupCloseBtn = profilePopup.querySelector(".popup__close-btn_rel_profile");
+const profilePopupForm = profilePopup.querySelector(".popup__form_rel_profile");
+const profilePopupNameInput = profilePopupForm.querySelector("#name-input");
+const profilePopupAboutInput = profilePopupForm.querySelector("#about-input");
+const profilePopupSubmitBtn = profilePopupForm.querySelector(".popup__submit");
+const profilePopupInputList = [...profilePopupForm.querySelectorAll(".popup__input")];
 
 //Select required DOM Elements from Add New Place Popup
 const placePopup = document.querySelector(".popup_rel_place");
-const placePopupCloseBtn = document.querySelector(".popup__close-btn_rel_place");
-const placePopupForm = document.querySelector(".popup__form_rel_place");
-const placePopupNameInput = document.querySelector("#place-input");
-const placePopupLinkInput = document.querySelector("#link-input");
+const placePopupCloseBtn = placePopup.querySelector(".popup__close-btn_rel_place");
+const placePopupForm = placePopup.querySelector(".popup__form_rel_place");
+const placePopupNameInput = placePopupForm.querySelector("#place-input");
+const placePopupLinkInput = placePopupForm.querySelector("#link-input");
+const placePopupSubmitBtn = placePopupForm.querySelector(".popup__submit");
+const placePopupInputList = [...placePopupForm.querySelectorAll(".popup__input")];
 
 //Select required DOM Elements from View Image Popup
 const imgPopup = document.querySelector(".popup_rel_image");
-const imgPopupCloseBtn = document.querySelector(".popup__close-btn_rel_image");
-const popupImg = document.querySelector(".popup__img");
-const popupCaption = document.querySelector(".popup__caption");
+const imgPopupCloseBtn = imgPopup.querySelector(".popup__close-btn_rel_image");
+const popupImg = imgPopup.querySelector(".popup__img");
+const popupCaption = imgPopup.querySelector(".popup__caption");
 
 //Select required DOM Elements from Card Template
 const cardTemplateContent = document.querySelector("#element-template").content;
@@ -84,6 +88,7 @@ const addCardElement = (title, link) => {
 const editProfile = () => {
   profilePopupNameInput.value = profileTitle.textContent;
   profilePopupAboutInput.value = profileSubtitle.textContent;
+  toggleButtonState(profilePopupSubmitBtn, profilePopupInputList, "popup__submit_disabled");
   openPopup(profilePopup);
 }
 
@@ -93,12 +98,14 @@ const submitProfile = e => {
   profileTitle.textContent = profilePopupNameInput.value;
   profileSubtitle.textContent = profilePopupAboutInput.value;
   closePopup(profilePopup);
+  resetFormValidation(profilePopupForm);
 }
 
 //Open Add New Place form
 const openAddPlacePopup = () => {
   placePopupNameInput.value = "";
   placePopupLinkInput.value = "";
+  toggleButtonState(placePopupSubmitBtn, placePopupInputList, "popup__submit_disabled");
   openPopup(placePopup);
 }
 
@@ -107,6 +114,7 @@ const submitNewPlace = e => {
   e.preventDefault();
   addCardElement(placePopupNameInput.value, placePopupLinkInput.value);
   closePopup(placePopup);
+  resetFormValidation(placePopupForm);
 }
 
 //Add Event Listeners
