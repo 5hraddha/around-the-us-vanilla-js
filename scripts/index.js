@@ -34,14 +34,23 @@ const popupCaption = imgPopup.querySelector(".popup__caption");
 //Select required DOM Elements from Card Template
 const cardTemplateContent = document.querySelector("#element-template").content;
 
-//Open the popup
-const openPopup = popup => {
-  popup.classList.add("popup_opened");
-}
-
 //Close the opened popup
 const closePopup = popup => {
   popup.classList.remove("popup_opened");
+}
+
+//Close the opened popup by clicking on overlay
+const closePopupByClick = e => {
+  if(e.target.classList.contains("popup_opened")){
+    closePopup(e.target);
+    e.target.removeEventListener("click", closePopupByClick);
+  }
+}
+
+//Open the popup
+const openPopup = popup => {
+  popup.classList.add("popup_opened");
+  popup.addEventListener("click", closePopupByClick);
 }
 
 //Open View Image popup
