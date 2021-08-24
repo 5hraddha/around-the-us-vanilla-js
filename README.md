@@ -7,6 +7,9 @@
 4. User can add a new card with the title and the link for image. As of now, the newly added card will not persist on page reload.
 5. User can delete any card if he wishes to.
 6. User can also have a closer look of the images by clicking on them.
+7. Live input validation on all the forms.
+8. Users can close the popup by clicking on the overlay, i.e. anywhere outside the popup's borders.
+9. Users can close the popup by pressing the Esc key.
 
 ## Technologies and Standards Used
 **The technologies that have been used are:**
@@ -37,7 +40,7 @@
   We are using [Git Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/). It provides an easy set of rules for creating an explicit commit history making it easier for people to contribute to our projects by communicating the nature of changes clearly.
 
 ## Product Specification Document
-You can view the product specification document [here](https://www.figma.com/file/m79HxYeZpOXRw0Tz2eZGOV/Sprint-5-Around-The-U.S.-desktop-mobile?node-id=0%3A1)
+You can view the product specification document [here](https://www.figma.com/file/05izwsCh3F3UsBmHfHhUFQ/Sprint-6-Around-The-U.S.?node-id=0%3A1)
 
 ## Future Improvements
 1. The data on the webpage should persist between page reloads.
