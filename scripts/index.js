@@ -43,14 +43,23 @@ const closePopup = popup => {
 const closePopupByClick = e => {
   if(e.target.classList.contains("popup_opened")){
     closePopup(e.target);
-    e.target.removeEventListener("click", closePopupByClick);
+    document.removeEventListener("click", closePopupByClick);
+  }
+}
+
+//Close the opened popup by pressing Escape key
+const closePopupByEsc = (e, popup) => {
+  if(e.key === "Escape"){
+    closePopup(popup);
+    document.removeEventListener("click", closePopupByEsc);
   }
 }
 
 //Open the popup
 const openPopup = popup => {
   popup.classList.add("popup_opened");
-  popup.addEventListener("click", closePopupByClick);
+  document.addEventListener("click", closePopupByClick);
+  document.addEventListener("keydown", e => closePopupByEsc(e, popup));
 }
 
 //Open View Image popup
