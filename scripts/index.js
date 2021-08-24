@@ -11,15 +11,15 @@ const cardContainer = document.querySelector(".elements");
 const profilePopup = document.querySelector(".popup_rel_profile");
 const profilePopupCloseBtn = document.querySelector(".popup__close-btn_rel_profile");
 const profilePopupForm = document.querySelector(".popup__form_rel_profile");
-const profilePopupNameInput = document.querySelector("#profile-name");
-const profilePopupAboutInput = document.querySelector("#profile-about-me");
+const profilePopupNameInput = document.querySelector("#name-input");
+const profilePopupAboutInput = document.querySelector("#about-input");
 
 //Select required DOM Elements from Add New Place Popup
 const placePopup = document.querySelector(".popup_rel_place");
 const placePopupCloseBtn = document.querySelector(".popup__close-btn_rel_place");
 const placePopupForm = document.querySelector(".popup__form_rel_place");
-const placePopupNameInput = document.querySelector("#place-name");
-const placePopupLinkInput = document.querySelector("#place-image-link");
+const placePopupNameInput = document.querySelector("#place-input");
+const placePopupLinkInput = document.querySelector("#link-input");
 
 //Select required DOM Elements from View Image Popup
 const imgPopup = document.querySelector(".popup_rel_image");
