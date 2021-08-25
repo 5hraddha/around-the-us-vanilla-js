@@ -34,43 +34,70 @@ const popupCaption = imgPopup.querySelector(".popup__caption");
 //Select required DOM Elements from Card Template
 const cardTemplateContent = document.querySelector("#element-template").content;
 
-//Close the opened popup
+/**
+ *  @function closePopup
+ *  Closes the opened popup.
+ *  @param {Object} popup The popup which has to be closed.
+ */
 const closePopup = popup => {
   popup.classList.remove("popup_opened");
+  document.removeEventListener("click", closePopupByClick);
+  document.removeEventListener("keydown", closePopupByEsc);
 }
 
-//Close the opened popup by clicking on overlay
+/**
+ *  @function closePopupByClick
+ *  Closes the opened popup by clicking on overlay outside the borders of the popup itself.
+ *  @param {Object} e The default event object.
+ */
 const closePopupByClick = e => {
   if(e.target.classList.contains("popup_opened")){
     closePopup(e.target);
-    document.removeEventListener("click", closePopupByClick);
   }
 }
 
-//Close the opened popup by pressing Escape key
-const closePopupByEsc = (e, popup) => {
+/**
+ *  @function closePopupByEsc
+ *  Closes the opened popup by pressing Escape key.
+ *  @param {Object} e The default event object.
+ */
+const closePopupByEsc = e => {
   if(e.key === "Escape"){
-    closePopup(popup);
-    document.removeEventListener("click", closePopupByEsc);
+    const popupToClose = document.querySelector(".popup_opened");
+    closePopup(popupToClose);
   }
 }
 
-//Open the popup
+/**
+ *  @function openPopup
+ *  Opens the popup.
+ *  @param {Object} popup The popup which has to be opened.
+ */
 const openPopup = popup => {
   popup.classList.add("popup_opened");
   document.addEventListener("click", closePopupByClick);
-  document.addEventListener("keydown", e => closePopupByEsc(e, popup));
+  document.addEventListener("keydown", closePopupByEsc);
 }
 
-//Open View Image popup
-const viewImage = e => {
+/**
+ *  @function openViewImagePopup
+ *  Opens the View Image popup.
+ *  @param {Object} e The default event object.
+ */
+const openViewImagePopup = e => {
   openPopup(imgPopup);
   popupImg.src = e.target.src;
   popupImg.alt = e.target.alt;
   popupCaption.textContent = e.target.alt;
 }
 
-//Create card element using the template before adding to DOM
+/**
+ *  @function createCardElement
+ *  Creates a new card element using the HTML template before adding to DOM.
+ *  @param {string} title The title of the image in the card.
+ *  @param {string} link The URL of the image in the card.
+ *  @returns {Object} The newly created card element.
+ */
 const createCardElement = (title, link) => {
   const newCard = cardTemplateContent.querySelector(".element").cloneNode(true);
   const cardImg = newCard.querySelector(".element__img");
@@ -91,27 +118,39 @@ const createCardElement = (title, link) => {
     cardToDelete.remove();
   });
 
-  cardImg.addEventListener("click", viewImage);
+  cardImg.addEventListener("click", openViewImagePopup);
 
   return newCard;
 }
 
-//Add card element to DOM
+/**
+ *  @function addCardElement
+ *  Adds the newly created card element to DOM.
+ *  @param {string} title The title of the image in the card.
+ *  @param {string} link The URL of the image in the card.
+ */
 const addCardElement = (title, link) => {
   const card = createCardElement(title, link);
   cardContainer.prepend(card);
 }
 
-//Open Edit Profile form
-const editProfile = () => {
+/**
+ *  @function openEditProfilePopup
+ *  Opens the Edit Profile popup.
+ */
+const openEditProfilePopup = () => {
   profilePopupNameInput.value = profileTitle.textContent;
   profilePopupAboutInput.value = profileSubtitle.textContent;
   toggleButtonState(profilePopupSubmitBtn, profilePopupInputList, "popup__submit_disabled");
   openPopup(profilePopup);
 }
 
-//Submit Edit Profile form data and update the respective values in the Profile
-const submitProfile = e => {
+/**
+ *  @function submitEditProfilePopup
+ *  Submits the Edit Profile form data and update the respective values in the Profile section of the webpage.
+ *  @param {Object} e The default event object.
+ */
+const submitEditProfilePopup = e => {
   e.preventDefault();
   profileTitle.textContent = profilePopupNameInput.value;
   profileSubtitle.textContent = profilePopupAboutInput.value;
@@ -119,7 +158,10 @@ const submitProfile = e => {
   resetFormValidation(profilePopupForm);
 }
 
-//Open Add New Place form
+/**
+ *  @function openAddPlacePopup
+ *  Opens Add New Place popup.
+ */
 const openAddPlacePopup = () => {
   placePopupNameInput.value = "";
   placePopupLinkInput.value = "";
@@ -127,8 +169,12 @@ const openAddPlacePopup = () => {
   openPopup(placePopup);
 }
 
-//Submit Add New place form data and add a new card in the beginning
-const submitNewPlace = e => {
+/**
+ *  @function submitAddPlacePopup
+ *  Submits Add New place form data and add a new card in the beginning of the webpage.
+ *  @param {Object} e The default event object.
+ */
+const submitAddPlacePopup = e => {
   e.preventDefault();
   addCardElement(placePopupNameInput.value, placePopupLinkInput.value);
   closePopup(placePopup);
@@ -136,12 +182,12 @@ const submitNewPlace = e => {
 }
 
 //Add Event Listeners
-profileEditBtn.addEventListener("click", editProfile);
+profileEditBtn.addEventListener("click", openEditProfilePopup);
 profilePopupCloseBtn.addEventListener("click", () => closePopup(profilePopup));
-profilePopupForm.addEventListener("submit", submitProfile);
+profilePopupForm.addEventListener("submit", submitEditProfilePopup);
 profileAddPlaceBtn.addEventListener("click", openAddPlacePopup);
 placePopupCloseBtn.addEventListener("click", () => closePopup(placePopup));
-placePopupForm.addEventListener("submit", submitNewPlace);
+placePopupForm.addEventListener("submit", submitAddPlacePopup);
 imgPopupCloseBtn.addEventListener("click", () => closePopup(imgPopup));
 
 //Add intial cards on page load
