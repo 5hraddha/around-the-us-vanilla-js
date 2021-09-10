@@ -1,3 +1,8 @@
+//imports
+import FormValidator from "./FormValidator.js";
+import Card from "./Card.js";
+import initialCards from "./initial-cards.js";
+
 //Select required DOM Elements from Profile
 const profileEditBtn = document.querySelector(".profile__edit-btn");
 const profileTitle = document.querySelector(".profile__title");

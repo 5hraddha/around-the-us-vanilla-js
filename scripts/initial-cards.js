@@ -25,3 +25,5 @@ const initialCards = [
     link: "./images/key-west-florida.jpeg"
   }
 ];
+
+export default initialCards;
