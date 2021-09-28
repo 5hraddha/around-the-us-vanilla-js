@@ -12,8 +12,8 @@ class PopupWithImage extends Popup {
    */
   constructor(popupSelector) {
     super(popupSelector);
-    this._popupImage        = this._popup.querySelector(".popup__img");
-    this._popupImageCaption = this._popup.querySelector(".popup__caption");
+    this._popupImgElement        = this._popup.querySelector(".popup__img");
+    this._popupImgCaptionElement = this._popup.querySelector(".popup__caption");
   }
 
   /**
@@ -22,9 +22,9 @@ class PopupWithImage extends Popup {
    * @param {string} imgLink -  The url or link of the image to be previewed or opened.
    */
   open(imgCaption, imgLink) {
-    this._popupImageCaption.textContent = imgCaption;
-    this._popupImage.src                = imgLink;
-    this._popupImage.alt                = imgCaption;
+    this._popupImgCaptionElement.textContent = imgCaption;
+    this._popupImgElement.src                = imgLink;
+    this._popupImgElement.alt                = imgCaption;
     super.open();
   }
 }
