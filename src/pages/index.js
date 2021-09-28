@@ -1,44 +1,26 @@
-// Import modules and data
-import FormValidator    from "./FormValidator.js";
-import Card             from "./Card.js";
-import initialCards     from "./initial-cards.js";
+// Import main stylesheet
+import "../pages/index.css";
 
-// Settings needed for form validation
-const formValidationSettings = {
-  formSelector        : ".popup__form",
-  inputSelector       : ".popup__input",
-  submitButtonSelector: ".popup__submit",
-  inactiveButtonClass : "popup__submit_disabled",
-  inputErrorClass     : "popup__input_type_error",
-  errorClass          : "popup__error_visible"
-};
+// Import modules
+import Card                 from "../components/Card.js";
+import FormValidator        from "../components/FormValidator.js";
+import PopupWithForm        from "../components/PopupWithForm.js";
+import PopupWithImage       from "../components/PopupWithImage";
+import Section              from "../components/Section.js";
+import UserInfo             from "../components/UserInfo.js"
 
-// Select required DOM Elements from Profile
-const profileEditBtn          = document.querySelector(".profile__edit-btn");
-const profileTitle            = document.querySelector(".profile__title");
-const profileSubtitle         = document.querySelector(".profile__subtitle");
-const profileAddPlaceBtn      = document.querySelector(".profile__add-btn");
+// Import Initial Card Data
+import {initialCards}       from "../utils/constants.js";
 
-// Select required DOM Elements from Card Elements
-const cardContainer           = document.querySelector(".elements");
+// Import required constants from Profile
 
-// Select required DOM Elements from Edit Profile Popup
-const profilePopup            = document.querySelector(".popup_rel_profile");
-const profilePopupCloseBtn    = profilePopup.querySelector(".popup__close-btn");
-const profilePopupForm        = profilePopup.querySelector(".popup__form");
-const profilePopupNameInput   = profilePopupForm.querySelector("#name-input");
-const profilePopupAboutInput  = profilePopupForm.querySelector("#about-input");
+// Import required constants from Card Elements
 
-// Select required DOM Elements from Add New Place Popup
-const placePopup              = document.querySelector(".popup_rel_place");
-const placePopupCloseBtn      = placePopup.querySelector(".popup__close-btn");
-const placePopupForm          = placePopup.querySelector(".popup__form");
-const placePopupNameInput     = placePopupForm.querySelector("#place-input");
-const placePopupLinkInput     = placePopupForm.querySelector("#link-input");
+// Import required constants from Edit Profile Popup
 
-// Select required DOM Elements from View Image Popup
-const imgPopup                = document.querySelector(".popup_rel_image");
-const imgPopupCloseBtn        = imgPopup.querySelector(".popup__close-btn_rel_image");
+// Import required constants from Add New Place Popup
+
+// Import required constants from from View Image Popup
 
 // Implement form validations for all the forms
 const profilePopupFormValidator = new FormValidator(formValidationSettings, profilePopupForm);
