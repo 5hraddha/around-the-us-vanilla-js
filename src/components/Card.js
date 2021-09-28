@@ -3,23 +3,18 @@
  * @module Card
  */
 
-const imgPopup                = document.querySelector(".popup_rel_image");
-const popupImg                = imgPopup.querySelector(".popup__img");
-const popupCaption            = imgPopup.querySelector(".popup__caption");
-
 /** Class representing an image card in the webpage */
 class Card {
   /**
    * Creates a new image card.
-   * @param {Object} data - The object having the title and the link of the image to be added to the card.
-   * @param {string} cardSelector -  The card template element selector.
-   * @param {function} openPopupHandler - The function that handles the preview image functionality.
+   * @param {Object} obj - An object having new image card details and a callback to handle click on any image
+   * @param {string} cardTemplateSelector -  The card template element selector.
    */
-  constructor(data, cardSelector, openPopupHandler) {
-    ({ title            : this._imgTitle,
-      link              : this._imgLink } = data);
-    this._cardSelector      = cardSelector;
-    this._openPopupHandler  = openPopupHandler;
+  constructor({card, handleCardClick}, cardTemplateSelector) {
+    ({ name            : this._imgName,
+      link             : this._imgLink } = card);
+    this._handleCardClick       = handleCardClick;
+    this._cardTemplateSelector  = cardTemplateSelector;
   }
 
   /**
@@ -27,7 +22,7 @@ class Card {
    */
   _getTemplate() {
     this._cardElement = document
-      .querySelector(this._cardSelector)
+      .querySelector(this._cardTemplateSelector)
       .content
       .querySelector(".element")
       .cloneNode(true);
@@ -54,17 +49,6 @@ class Card {
   }
 
   /**
-   * Handles the preview image functionality.
-   * @param {Object} e The default event object.
-   */
-  _handlePreviewImage(e) {
-    this._openPopupHandler(imgPopup);
-    popupImg.src = e.target.src;
-    popupImg.alt = e.target.alt;
-    popupCaption.textContent = e.target.alt;
-  }
-
-  /**
    * Sets all the event listeners on the new image card element
    */
   _setEventListeners() {
@@ -74,7 +58,7 @@ class Card {
 
     this._cardLikeBtn.addEventListener("click", e => this._handleLikeIcon(e));
     this._cardDeleteBtn.addEventListener("click", e => this._handleDeleteCard(e));
-    this._cardImg.addEventListener("click", e => this._handlePreviewImage(e));
+    this._cardImg.addEventListener("click", () => this._handleCardClick(this._imgName, this._imgLink));
   }
 
   /**
@@ -87,8 +71,8 @@ class Card {
 
     this._cardTitle             = this._cardElement.querySelector(".element__title");
     this._cardImg.src           = this._imgLink;
-    this._cardImg.alt           = this._imgTitle;
-    this._cardTitle.textContent = this._imgTitle;
+    this._cardImg.alt           = this._imgName;
+    this._cardTitle.textContent = this._imgName;
 
     return this._cardElement;
   }

@@ -10,135 +10,108 @@ import Section              from "../components/Section.js";
 import UserInfo             from "../components/UserInfo.js"
 
 // Import Initial Card Data
-import {initialCards}       from "../utils/constants.js";
+import { initialCards }       from "../utils/constants.js";
 
-// Import required constants from Profile
+// Import logo and profile picture
+import pageLogoUrl          from "../images/logo.svg";
+import profilePicUrl        from "../images/profile-avatar.jpeg";
+
+// Import page logo and profile picture Elements
+import {
+  pageLogoElement,
+  profilePicElement } from "../utils/constants.js";
 
 // Import required constants from Card Elements
+import { imgCardsContainer } from "../utils/constants.js";
 
-// Import required constants from Edit Profile Popup
+// Import required constants from User Profile
+import {
+  editProfileBtn,
+  profileTitle,
+  profileSubtitle,
+} from "../utils/constants.js";
 
-// Import required constants from Add New Place Popup
+// Import required constants from Edit User Profile Popup
+import {
+  editProfilePopupForm,
+  editProfileNameInput,
+  editProfileAboutInput
+} from "../utils/constants.js";
 
-// Import required constants from from View Image Popup
+// Import required constants needed for adding new Image
+import { addImgBtn } from "../utils/constants.js";
+
+// Import required constants from Add New Image Popup
+import { addImgPopupForm } from "../utils/constants.js";
+
+// Set Logo and Profile Picture
+pageLogoElement.src   = pageLogoUrl;
+profilePicElement.src = profilePicUrl;
 
 // Implement form validations for all the forms
-const profilePopupFormValidator = new FormValidator(formValidationSettings, profilePopupForm);
-const placePopupFormValidator   = new FormValidator(formValidationSettings, placePopupForm);
-profilePopupFormValidator.enableValidation();
-placePopupFormValidator.enableValidation();
+const editProfileFormValidator  = new FormValidator(formValidationSettings, editProfilePopupForm);
+const addImgFormValidator       = new FormValidator(formValidationSettings, addImgPopupForm);
+editProfileFormValidator.enableValidation();
+addImgFormValidator.enableValidation();
 
-/**
- *  @function closePopup
- *  Closes the opened popup.
- *  @param {Object} popup The popup which has to be closed.
- */
-const closePopup = popup => {
-  popup.classList.remove("popup_opened");
-  document.removeEventListener("click", closePopupByClick);
-  document.removeEventListener("keydown", closePopupByEsc);
+// Initialize Image Popup
+const imgPopup = new PopupWithImage(".popup_role_image");
+imgPopup.setEventListeners();
+
+// Function that renders each image card to the DOM
+const renderImgCard = item => {
+  const newImgCardSetttings = {
+    card: item,
+    handleCardClick: (name, link) => {
+      imgPopup.open(name, link);
+    }
+  };
+  const newImg = new Card(newImgCardSetttings, "#element-template");
+  const newImgCardElement = newImg.generateCard();
+  imgCardsList.addItem(newImgCardElement);
 }
 
-/**
- *  @function closePopupByClick
- *  Closes the opened popup by clicking on overlay outside the borders of the popup itself.
- *  @param {Object} e The default event object.
- */
-const closePopupByClick = e => {
-  if(e.target.classList.contains("popup_opened")){
-    closePopup(e.target);
-  }
+// Add intial cards on page load
+const imgCardsList = new Section({ items: initialCards, renderer: renderImgCard}, imgCardsContainer);
+imgCardsList.renderItems();
+
+// Add user info on page load
+const user = new UserInfo({
+  userTitleSelector: ".profile__title", 
+  userSubtitleSelector: ".profile__subtitle"});
+const currentUserTitle    = profileTitle.textContent;
+const currentUserSubtitle = profileSubtitle.textContent;
+user.setUserInfo(currentUserTitle, currentUserSubtitle);
+
+// Initialize Edit Profile Popup
+const handleEditProfileFormSubmit = ({title, subtitle}) =>{
+  user.setUserInfo(title, subtitle);
+  editProfilePopup.close();
 }
+const editProfilePopup = new PopupWithForm(".popup_rel_profile", handleEditProfileFormSubmit);
+editProfilePopup.setEventListeners();
 
-/**
- *  @function closePopupByEsc
- *  Closes the opened popup by pressing Escape key.
- *  @param {Object} e The default event object.
- */
-const closePopupByEsc = e => {
-  if(e.key === "Escape"){
-    const popupToClose = document.querySelector(".popup_opened");
-    closePopup(popupToClose);
-  }
+// Initialize Add Image Popup
+const handleAddImgFormSubmit = ({imgName, link}) => {
+  initialCards.unshift({imgName, link});
+  imgCardsList.renderItems();
+  addImgPopup.close();
 }
+const addImgPopup = new PopupWithForm(".popup_rel_place", handleAddImgFormSubmit);
+addImgPopup.setEventListeners();
 
-/**
- *  @function openPopup
- *  Opens the popup.
- *  @param {Object} popup The popup which has to be opened.
- */
-const openPopup = popup => {
-  popup.classList.add("popup_opened");
-  document.addEventListener("click", closePopupByClick);
-  document.addEventListener("keydown", closePopupByEsc);
+// Add Event Listener to Profile Edit Button
+const handleEditProfile = () => {
+  const {title, subtitle} = user.getUserInfo();
+  editProfileNameInput.value = title;
+  editProfileAboutInput.value = subtitle;
+  editProfileFormValidator.toggleButtonState();
+  editProfilePopup.open();
 }
+editProfileBtn.addEventListener("click", handleEditProfile);
 
-/**
- *  @function addCardElement
- *  Adds the newly created card element to DOM.
- *  @param {string} title The title of the image in the card.
- *  @param {string} link The URL of the image in the card.
- */
-const addCardElement = (title, link) => {
-  const card = new Card({title, link}, "#element-template", openPopup);
-  cardContainer.prepend(card.generateCard());
+// Add Event Listener to Add Image Button
+const handleAddImg = () => {
+  addImgPopup.open();
 }
-
-/**
- *  @function openEditProfilePopup
- *  Opens the Edit Profile popup.
- */
-const openEditProfilePopup = () => {
-  profilePopupNameInput.value = profileTitle.textContent;
-  profilePopupAboutInput.value = profileSubtitle.textContent;
-  profilePopupFormValidator.toggleButtonState();
-  openPopup(profilePopup);
-}
-
-/**
- *  @function submitEditProfilePopup
- *  Submits the Edit Profile form data and update the respective values in the Profile section of the webpage.
- *  @param {Object} e The default event object.
- */
-const submitEditProfilePopup = e => {
-  e.preventDefault();
-  profileTitle.textContent = profilePopupNameInput.value;
-  profileSubtitle.textContent = profilePopupAboutInput.value;
-  closePopup(profilePopup);
-  profilePopupFormValidator.resetFormValidation();
-}
-
-/**
- *  @function openAddPlacePopup
- *  Opens Add New Place popup.
- */
-const openAddPlacePopup = () => {
-  placePopupNameInput.value = "";
-  placePopupLinkInput.value = "";
-  placePopupFormValidator.toggleButtonState();
-  openPopup(placePopup);
-}
-
-/**
- *  @function submitAddPlacePopup
- *  Submits Add New place form data and add a new card in the beginning of the webpage.
- *  @param {Object} e The default event object.
- */
-const submitAddPlacePopup = e => {
-  e.preventDefault();
-  addCardElement(placePopupNameInput.value, placePopupLinkInput.value);
-  closePopup(placePopup);
-  placePopupFormValidator.resetFormValidation();
-}
-
-//Add Event Listeners
-profileEditBtn.addEventListener("click", openEditProfilePopup);
-profilePopupCloseBtn.addEventListener("click", () => closePopup(profilePopup));
-profilePopupForm.addEventListener("submit", submitEditProfilePopup);
-profileAddPlaceBtn.addEventListener("click", openAddPlacePopup);
-placePopupCloseBtn.addEventListener("click", () => closePopup(placePopup));
-placePopupForm.addEventListener("submit", submitAddPlacePopup);
-imgPopupCloseBtn.addEventListener("click", () => closePopup(imgPopup));
-
-//Add intial cards on page load
-initialCards.forEach(card => addCardElement(card.name, card.link));
+addImgBtn.addEventListener("click", handleAddImg);

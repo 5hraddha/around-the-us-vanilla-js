@@ -7,7 +7,6 @@
   <meta name="author" content="Shraddha">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- <link rel="stylesheet" href="pages/index.css"> -->
   <title>Around the US</title>
 </head>
 <body class="page">
@@ -15,14 +14,14 @@
 
     <!-- page header -->
     <header class="header">
-      <img class="logo" src="images/logo.svg" alt="logo of the webpage having text around the US">
+      <img class="logo" alt="logo of the webpage having text around the US">
     </header>
 
     <!-- main content of the page -->
     <main class="content">
       <!-- section containing user info, functionality to edit it and to add new images -->
       <section class="profile">
-        <img class="profile__avatar" src="images/profile-avatar.jpeg" alt="profile picture">
+        <img class="profile__avatar" alt="profile picture">
         <div class="profile__info">
           <div class="profile__main-content">
             <h1 class="profile__title">Jacques Cousteau</h1>
@@ -53,7 +52,7 @@
             class="popup__input" 
             type="text" 
             id="name-input" 
-            name="profile-name" 
+            name="title" 
             placeholder="Name" 
             minlength="2"
             maxlength="40"
@@ -63,7 +62,7 @@
             class="popup__input" 
             type="text" 
             id="about-input" 
-            name="profile-about-me" 
+            name="subtitle" 
             placeholder="About me" 
             minlength="2"
             maxlength="200"
@@ -84,7 +83,7 @@
             class="popup__input" 
             type="text" 
             id="place-input" 
-            name="place-name" 
+            name="imgName" 
             placeholder="Title" 
             minlength="1"
             maxlength="30"
@@ -94,7 +93,7 @@
             class="popup__input" 
             type="url" 
             id="link-input" 
-            name="place-image-link" 
+            name="link" 
             placeholder="Image link" 
             required>
           <span id="link-input-error" class="popup__error"></span>
@@ -129,6 +128,5 @@
     </li>
   </template>
 
-  <!-- <script type="module" src="pages/index.js"></script> -->
 </body>
 </html>
