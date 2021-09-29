@@ -23,6 +23,8 @@
 | Figma                                             | For referring to the product design specification |
 | [TinyPng](https://tinypng.com/)                   | For JPEG/PNG Image Compression                    |
 | [SVGOMG](https://jakearchibald.github.io/svgomg/) | For refining and compressing SVGs                 |
+| [Webpack](https://webpack.js.org/)                | For bundling all the ES modules                   |
+| [Babel](https://babeljs.io/)                      | For transpiling JS code                           |
 
 **The main concepts that have been emphasized are:**
 1. **Responsive Web Design**
