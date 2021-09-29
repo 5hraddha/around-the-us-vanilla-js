@@ -40,7 +40,7 @@ class Popup {
    */
   setEventListeners() {
     const popupCloseBtn = this._popup.querySelector(".popup__close-btn");
-    popupCloseBtn.addEventListener("click", () => this._close());
+    popupCloseBtn.addEventListener("click", () => this.close());
   }
 
   /**

@@ -21,9 +21,6 @@ import {
   pageLogoElement,
   profilePicElement } from "../utils/constants.js";
 
-// Import required constants from Card Elements
-import { imgCardsContainer } from "../utils/constants.js";
-
 // Import required constants from User Profile
 import {
   editProfileBtn,
@@ -44,6 +41,9 @@ import { addImgBtn } from "../utils/constants.js";
 // Import required constants from Add New Image Popup
 import { addImgPopupForm } from "../utils/constants.js";
 
+// Import Form Validation Settings
+import { formValidationSettings } from "../utils/constants.js";
+
 // Set Logo and Profile Picture
 pageLogoElement.src   = pageLogoUrl;
 profilePicElement.src = profilePicUrl;
@@ -55,7 +55,7 @@ editProfileFormValidator.enableValidation();
 addImgFormValidator.enableValidation();
 
 // Initialize Image Popup
-const imgPopup = new PopupWithImage(".popup_role_image");
+const imgPopup = new PopupWithImage(".popup_rel_image");
 imgPopup.setEventListeners();
 
 // Function that renders each image card to the DOM
@@ -72,7 +72,7 @@ const renderImgCard = item => {
 }
 
 // Add intial cards on page load
-const imgCardsList = new Section({ items: initialCards, renderer: renderImgCard}, imgCardsContainer);
+const imgCardsList = new Section({ items: initialCards, renderer: renderImgCard}, ".elements");
 imgCardsList.renderItems();
 
 // Add user info on page load
@@ -92,8 +92,8 @@ const editProfilePopup = new PopupWithForm(".popup_rel_profile", handleEditProfi
 editProfilePopup.setEventListeners();
 
 // Initialize Add Image Popup
-const handleAddImgFormSubmit = ({imgName, link}) => {
-  initialCards.unshift({imgName, link});
+const handleAddImgFormSubmit = ({name, link}) => {
+  initialCards.unshift({name, link});
   imgCardsList.renderItems();
   addImgPopup.close();
 }
