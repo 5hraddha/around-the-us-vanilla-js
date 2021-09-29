@@ -1,3 +1,6 @@
+// ********************************************************************************************* //
+//                                Import Modules and Constants                                   //
+// ********************************************************************************************* //
 // Import main stylesheet
 import "../pages/index.css";
 
@@ -44,22 +47,33 @@ import { addImgPopupForm } from "../utils/constants.js";
 // Import Form Validation Settings
 import { formValidationSettings } from "../utils/constants.js";
 
+// ********************************************************************************************* //
+//                              Setting pictures on the webpage                                  //
+// ********************************************************************************************* //
+
 // Set Logo and Profile Picture
 pageLogoElement.src   = pageLogoUrl;
 profilePicElement.src = profilePicUrl;
 
+
+// ********************************************************************************************* //
+//                                      Form Validations                                         //
+// ********************************************************************************************* //
 // Implement form validations for all the forms
 const editProfileFormValidator  = new FormValidator(formValidationSettings, editProfilePopupForm);
 const addImgFormValidator       = new FormValidator(formValidationSettings, addImgPopupForm);
 editProfileFormValidator.enableValidation();
 addImgFormValidator.enableValidation();
 
+// ********************************************************************************************* //
+//                            Add Intial Image Cards on Page Load                                //
+// ********************************************************************************************* //
 // Initialize Image Popup
 const imgPopup = new PopupWithImage(".popup_rel_image");
 imgPopup.setEventListeners();
 
-// Function that renders each image card to the DOM
-const renderImgCard = item => {
+// Function that returns new Image card
+const getNewImgCard = item => {
   const newImgCardSetttings = {
     card: item,
     handleCardClick: (name, link) => {
@@ -67,7 +81,12 @@ const renderImgCard = item => {
     }
   };
   const newImg = new Card(newImgCardSetttings, "#element-template");
-  const newImgCardElement = newImg.generateCard();
+  return newImg;
+}
+
+// Function that renders each image card to the DOM
+const renderImgCard = item => {
+  const newImgCardElement = getNewImgCard(item).generateCard();
   imgCardsList.addItem(newImgCardElement);
 }
 
@@ -75,13 +94,21 @@ const renderImgCard = item => {
 const imgCardsList = new Section({ items: initialCards, renderer: renderImgCard}, ".elements");
 imgCardsList.renderItems();
 
+// ********************************************************************************************* //
+//                            Add Intial User Info on Page Load                                  //
+// ********************************************************************************************* //
+
 // Add user info on page load
 const user = new UserInfo({
-  userTitleSelector: ".profile__title", 
+  userTitleSelector: ".profile__title",
   userSubtitleSelector: ".profile__subtitle"});
 const currentUserTitle    = profileTitle.textContent;
 const currentUserSubtitle = profileSubtitle.textContent;
 user.setUserInfo(currentUserTitle, currentUserSubtitle);
+
+// ********************************************************************************************* //
+//                  Initialize all Popups and Set Event Listeners on them                        //
+// ********************************************************************************************* //
 
 // Initialize Edit Profile Popup
 const handleEditProfileFormSubmit = ({title, subtitle}) =>{
@@ -94,13 +121,16 @@ editProfilePopup.setEventListeners();
 
 // Initialize Add Image Popup
 const handleAddImgFormSubmit = ({name, link}) => {
-  initialCards.unshift({name, link});
-  imgCardsList.renderItems();
+  imgCardsList.addItem(getNewImgCard({name, link}).generateCard());
   addImgPopup.close();
   addImgFormValidator.toggleButtonState();
 }
 const addImgPopup = new PopupWithForm(".popup_rel_place", handleAddImgFormSubmit);
 addImgPopup.setEventListeners();
+
+// ********************************************************************************************* //
+//                  Set Event Listeners on all the buttons on the webpage                        //
+// ********************************************************************************************* //
 
 // Add Event Listener to Profile Edit Button
 const handleEditProfile = () => {

@@ -21,7 +21,7 @@ class Section {
    * @param {HTMLElement} element The HTML Element to add to the container.
    */
   addItem(element) {
-    this._container.append(element);
+    this._container.prepend(element);
   }
 
   /**
