@@ -11,7 +11,7 @@ class Section {
    * @param {string} containerSelector -  The CSS class selector to select the container for adding the card elements.
    */
   constructor({ items, renderer}, containerSelector) {
-    this._renderedItems = items;
+    this._items         = items;
     this._renderer      = renderer;
     this._container     = document.querySelector(containerSelector);
   }
@@ -36,7 +36,7 @@ class Section {
    */
   renderItems() {
     this.clear();
-    this._renderedItems.forEach(item => this._renderer(item));
+    this._items.forEach(this._renderer);
   }
 }
 

@@ -32,7 +32,7 @@ class Card {
    * Handles the clicking of the like button on the image card.
    * @param {Object} e The default event object.
    */
-  _handleLikeIcon(e) {
+  _handleLikeIcon = e => {
     e.target
       .classList
       .toggle("element__like-btn_active");
@@ -42,10 +42,10 @@ class Card {
    * Handles the deletion of the image card, when delete icon on the image card is clicked.
    * @param {Object} e The default event object.
    */
-  _handleDeleteCard(e) {
-    e.target
-      .closest(".element")
-      .remove();
+  _handleDeleteCard = e => {
+    let cardToDelete = e.target.closest(".element");
+    cardToDelete.remove();
+    cardToDelete = null;
   }
 
   /**
@@ -56,8 +56,8 @@ class Card {
     this._cardDeleteBtn   = this._cardElement.querySelector(".element__delete-btn");
     this._cardImg         = this._cardElement.querySelector(".element__img");
 
-    this._cardLikeBtn.addEventListener("click", e => this._handleLikeIcon(e));
-    this._cardDeleteBtn.addEventListener("click", e => this._handleDeleteCard(e));
+    this._cardLikeBtn.addEventListener("click", this._handleLikeIcon);
+    this._cardDeleteBtn.addEventListener("click", this._handleDeleteCard);
     this._cardImg.addEventListener("click", () => this._handleCardClick(this._imgName, this._imgLink));
   }
 

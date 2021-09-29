@@ -11,15 +11,13 @@ class Popup {
    */
   constructor(popupSelector) {
     this._popup               = document.querySelector(popupSelector);
-    this._handleClickClose    = this._handleClickClose.bind(this);
-    this._handleEscClose      = this._handleEscClose.bind(this);
   }
 
   /**
    * Handles the closing of the opened popup by pressing Escape key.
    * @param {Object} e The default event object.
    */
-  _handleEscClose(e) {
+  _handleEscClose = e => {
     if(e.key === "Escape"){
       this.close();
     }
@@ -29,7 +27,7 @@ class Popup {
    * Handles the closing of the opened popup by mouse click on overlay outside the borders of the popup itself.
    * @param {Object} e The default event object.
    */
-  _handleClickClose(e) {
+  _handleClickClose = e => {
     if(e.target.classList.contains("popup_opened")){
       this.close();
     }

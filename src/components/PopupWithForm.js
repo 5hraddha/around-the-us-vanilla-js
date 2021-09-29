@@ -23,12 +23,12 @@ class PopupWithForm extends Popup {
    */
   _getInputValues() {
     this._inputElementsList = [...this._formElement.querySelectorAll(".popup__input")];
-    this._formValues = {};
+    const formValues = {};
     this._inputElementsList.forEach(
       inputElement => 
-        this._formValues[inputElement.name] = inputElement.value
+        formValues[inputElement.name] = inputElement.value
     );
-    return this._formValues;
+    return formValues;
   }
 
   /**

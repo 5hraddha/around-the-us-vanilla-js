@@ -87,6 +87,7 @@ user.setUserInfo(currentUserTitle, currentUserSubtitle);
 const handleEditProfileFormSubmit = ({title, subtitle}) =>{
   user.setUserInfo(title, subtitle);
   editProfilePopup.close();
+  editProfileFormValidator.toggleButtonState();
 }
 const editProfilePopup = new PopupWithForm(".popup_rel_profile", handleEditProfileFormSubmit);
 editProfilePopup.setEventListeners();
@@ -96,6 +97,7 @@ const handleAddImgFormSubmit = ({name, link}) => {
   initialCards.unshift({name, link});
   imgCardsList.renderItems();
   addImgPopup.close();
+  addImgFormValidator.toggleButtonState();
 }
 const addImgPopup = new PopupWithForm(".popup_rel_place", handleAddImgFormSubmit);
 addImgPopup.setEventListeners();
@@ -113,5 +115,6 @@ editProfileBtn.addEventListener("click", handleEditProfile);
 // Add Event Listener to Add Image Button
 const handleAddImg = () => {
   addImgPopup.open();
+  addImgFormValidator.toggleButtonState();
 }
 addImgBtn.addEventListener("click", handleAddImg);
