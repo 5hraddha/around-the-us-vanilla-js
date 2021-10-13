@@ -5,15 +5,13 @@
 import "../pages/index.css";
 
 // Import modules
+import Api                  from "../components/Api.js";
 import Card                 from "../components/Card.js";
 import FormValidator        from "../components/FormValidator.js";
 import PopupWithForm        from "../components/PopupWithForm.js";
 import PopupWithImage       from "../components/PopupWithImage";
 import Section              from "../components/Section.js";
 import UserInfo             from "../components/UserInfo.js"
-
-// Import Initial Card Data
-import { initialCards }       from "../utils/constants.js";
 
 // Import logo and profile picture
 import pageLogoUrl          from "../images/logo.svg";
@@ -46,6 +44,17 @@ import { addImgPopupForm } from "../utils/constants.js";
 
 // Import Form Validation Settings
 import { formValidationSettings } from "../utils/constants.js";
+
+// ********************************************************************************************* //
+//                              Establish connection with API                                    //
+// ********************************************************************************************* //
+const api = new Api({
+  baseUrl: "https://around.nomoreparties.co/v1/group-12",
+  headers: {
+    authorization: "9bc9c0f1-5a8a-40aa-b985-20e7b24d1389",
+    "Content-Type": "application/json"
+  }
+});
 
 // ********************************************************************************************* //
 //                              Setting pictures on the webpage                                  //
@@ -91,8 +100,12 @@ const renderImgCard = item => {
 }
 
 // Add intial cards on page load
-const imgCardsList = new Section({ items: initialCards, renderer: renderImgCard}, ".elements");
-imgCardsList.renderItems();
+const imgCardsList = new Section({ renderer: renderImgCard }, ".elements");
+api.getInitialCards()
+  .then(cards => {
+    imgCardsList.renderItems(cards);
+  })
+  .catch(err => console.log(err));
 
 // ********************************************************************************************* //
 //                            Add Intial User Info on Page Load                                  //

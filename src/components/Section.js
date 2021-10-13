@@ -34,9 +34,9 @@ class Section {
   /**
    * Iterates through the array of data elements and renders each element on a page.
    */
-  renderItems() {
+  renderItems(items) {
     this.clear();
-    this._items.forEach(this._renderer);
+    items.forEach(this._renderer);
   }
 }
 
