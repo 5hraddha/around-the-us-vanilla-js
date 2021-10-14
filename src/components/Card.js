@@ -11,8 +11,9 @@ class Card {
    * @param {string} cardTemplateSelector -  The card template element selector.
    */
   constructor({card, handleCardClick}, cardTemplateSelector) {
-    ({ name            : this._imgName,
-      link             : this._imgLink } = card);
+    ({ name                     : this._imgName,
+      link                      : this._imgLink,
+      likes                     : this._imgLikes} = card);
     this._handleCardClick       = handleCardClick;
     this._cardTemplateSelector  = cardTemplateSelector;
   }
@@ -69,11 +70,12 @@ class Card {
     this._getTemplate();
     this._setEventListeners();
 
-    this._cardTitle             = this._cardElement.querySelector(".element__title");
-    this._cardImg.src           = this._imgLink;
-    this._cardImg.alt           = this._imgName;
-    this._cardTitle.textContent = this._imgName;
-
+    this._cardTitle                     = this._cardElement.querySelector(".element__title");
+    this._cardLikeCount                 = this._cardElement.querySelector(".element__like-count");
+    this._cardImg.src                   = this._imgLink;
+    this._cardImg.alt                   = this._imgName;
+    this._cardTitle.textContent         = this._imgName;
+    this._cardLikeCount.textContent     = this._imgLikes.length;
     return this._cardElement;
   }
 }

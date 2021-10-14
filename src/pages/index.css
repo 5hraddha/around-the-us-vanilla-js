@@ -28,6 +28,8 @@
 /* stylesheets for the block - element */
 @import url(../blocks/element/element.css);
 @import url(../blocks/element/__img/element__img.css);
+@import url(../blocks/element/__likes/element__likes.css);
+@import url(../blocks/element/__like-count/element__like-count.css);
 @import url(../blocks/element/__like-btn/element__like-btn.css);
 @import url(../blocks/element/__delete-btn/element__delete-btn.css);
 @import url(../blocks/element/__like-btn/_active/element__like-btn_active.css);
