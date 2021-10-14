@@ -24,6 +24,7 @@ class UserInfo {
    */
   getUserInfo() {
     const userData = {
+      id: this._userId,
       name: this._userTitle,
       about: this._userSubtitle,
       avatar: this._userProfilePic

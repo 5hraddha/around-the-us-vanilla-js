@@ -1,39 +1,3 @@
-// Import all the images
-import antelopeCanyonImgUrl     from "../images/antelope-canyon-arizona.jpg";
-import capeHatterasImgUrl       from "../images/cape-hatteras-lighthouse-north-carolina.jpeg";
-import shenandoahImgUrl         from "../images/shenandoah-national-park.jpeg";
-import bigSurImgUrl             from "../images/big-sur-california.jpeg";
-import killingtonImgUrl         from "../images/killington-vermont.jpeg";
-import keyWestImgUrl            from "../images/key-west-florida.jpeg";
-
-// Initial Cards to show while the page loads
-export const initialCards = [
-  {
-    name: "Antelope Canyon",
-    link: antelopeCanyonImgUrl
-  },
-  {
-    name: "Cape Hatteras Lighthouse",
-    link: capeHatterasImgUrl
-  },
-  {
-    name: "Shenandoah National Park",
-    link: shenandoahImgUrl
-  },
-  {
-    name: "Big Sur",
-    link: bigSurImgUrl
-  },
-  {
-    name: "Killington Vermont",
-    link: killingtonImgUrl
-  },
-  {
-    name: "Key West",
-    link: keyWestImgUrl
-  }
-];
-
 // Settings needed for form validation
 export const formValidationSettings = {
   formSelector        : ".popup__form",
@@ -65,3 +29,7 @@ export const addImgBtn              = document.querySelector(".profile__add-btn"
 // Select required DOM Elements from Add New Image Popup
 export const addImgPopup            = document.querySelector(".popup_rel_place");
 export const addImgPopupForm        = addImgPopup.querySelector(".popup__form");
+
+// Select required DOM Elements from Delete Image Popup
+export const deleteImgPopup         = document.querySelector(".popup_rel_delete");
+export const deleteImgPopupForm     = deleteImgPopup.querySelector(".popup__form");

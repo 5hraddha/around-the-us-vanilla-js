@@ -57,6 +57,17 @@ class Api {
     })
       .then(response => this._checkResponseStatus(response));
   }
+
+  deleteCard = cardId => {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._headers.authorization,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => this._checkResponseStatus(response));
+  }
 }
 
 export default Api;

@@ -42,8 +42,12 @@ import { addImgBtn } from "../utils/constants.js";
 // Import required constants from Add New Image Popup
 import { addImgPopupForm } from "../utils/constants.js";
 
+// Import required constants from Delete Image Popup
+import { deleteImgPopupForm } from "../utils/constants.js";
+
 // Import Form Validation Settings
 import { formValidationSettings } from "../utils/constants.js";
+import PopupDeleteCard from "../components/PopupDeleteCard";
 
 // ********************************************************************************************* //
 //                              Establish connection with API                                    //
@@ -64,7 +68,6 @@ const api = new Api({
 pageLogoElement.src   = pageLogoUrl;
 profilePicElement.src = profilePicUrl;
 
-
 // ********************************************************************************************* //
 //                                      Form Validations                                         //
 // ********************************************************************************************* //
@@ -73,6 +76,21 @@ const editProfileFormValidator  = new FormValidator(formValidationSettings, edit
 const addImgFormValidator       = new FormValidator(formValidationSettings, addImgPopupForm);
 editProfileFormValidator.enableValidation();
 addImgFormValidator.enableValidation();
+
+// ********************************************************************************************* //
+//                            Add Intial User Info on Page Load                                  //
+// ********************************************************************************************* //
+
+// Add user info on page load
+const user = new UserInfo({
+  userTitleSelector: ".profile__title",
+  userSubtitleSelector: ".profile__subtitle",
+  userProfilePicSelector: ".profile__avatar"});
+api.getUserData()
+  .then( userData => {
+    const {name, about, avatar, _id} = userData;
+    user.setUserInfo(name, about, avatar, _id);
+  })
 
 // ********************************************************************************************* //
 //                            Add Intial Image Cards on Page Load                                //
@@ -87,9 +105,12 @@ const getNewImgCard = item => {
     card: item,
     handleCardClick: (name, link) => {
       imgPopup.open(name, link);
+    },
+    handleTrashBtnClick: e => {
+      deleteImgPopup.open(e, item._id);
     }
   };
-  const newImg = new Card(newImgCardSetttings, "#element-template");
+  const newImg = new Card(newImgCardSetttings, "#element-template", user.getUserInfo().id);
   return newImg;
 }
 
@@ -106,21 +127,6 @@ api.getInitialCards()
     imgCardsList.renderItems(cards);
   })
   .catch(err => console.log(err));
-
-// ********************************************************************************************* //
-//                            Add Intial User Info on Page Load                                  //
-// ********************************************************************************************* //
-
-// Add user info on page load
-const user = new UserInfo({
-  userTitleSelector: ".profile__title",
-  userSubtitleSelector: ".profile__subtitle",
-  userProfilePicSelector: ".profile__avatar"});
-api.getUserData()
-  .then( userData => {
-    const {name, about, avatar, _id} = userData;
-    user.setUserInfo(name, about, avatar, _id);
-  })
 
 // ********************************************************************************************* //
 //                  Initialize all Popups and Set Event Listeners on them                        //
@@ -143,14 +149,25 @@ editProfilePopup.setEventListeners();
 const handleAddImgFormSubmit = ({name, link}) => {
   api.addNewCard(name, link)
     .then(newCardData => {
-      const {name, link} = newCardData;
-      imgCardsList.addItem(getNewImgCard({name, link}).generateCard());
+      imgCardsList.addItem(getNewImgCard(newCardData).generateCard());
     });
   addImgPopup.close();
   addImgFormValidator.toggleButtonState();
 }
 const addImgPopup = new PopupWithForm(".popup_rel_place", handleAddImgFormSubmit);
 addImgPopup.setEventListeners();
+
+// Initialize Delete Image Popup
+const handleDeleteImgFormSubmit = (cardId, cardToDelete) => {
+  api.deleteCard(cardId).
+    then(() => {
+      cardToDelete.remove();
+      cardToDelete = null;
+      deleteImgPopup.close();
+    });
+}
+const deleteImgPopup = new PopupDeleteCard(".popup_rel_delete", handleDeleteImgFormSubmit);
+deleteImgPopup.setEventListeners();
 
 // ********************************************************************************************* //
 //                  Set Event Listeners on all the buttons on the webpage                        //

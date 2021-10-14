@@ -51,7 +51,9 @@
 @import url(../blocks/popup/__input/_type/popup__input_type_error.css);
 @import url(../blocks/popup/__submit/popup__submit.css);
 @import url(../blocks/popup/__submit/_disabled/popup__submit_disabled.css);
+@import url(../blocks/popup/__submit/_rel/popup__submit_rel_delete.css);
 @import url(../blocks/popup/__title/popup__title.css);
+@import url(../blocks/popup/__title/_rel/popup__title_rel_delete.css);
 @import url(../blocks/popup/__figure/popup__figure.css);
 @import url(../blocks/popup/__img/popup__img.css);
 @import url(../blocks/popup/__caption/popup__caption.css);

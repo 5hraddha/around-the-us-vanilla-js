@@ -10,11 +10,14 @@ class Card {
    * @param {Object} obj - An object having new image card details and a callback to handle click on any image
    * @param {string} cardTemplateSelector -  The card template element selector.
    */
-  constructor({card, handleCardClick}, cardTemplateSelector) {
-    ({ name                     : this._imgName,
+  constructor({card, handleCardClick, handleTrashBtnClick}, cardTemplateSelector, userId) {
+    ({ owner                    : this._imgOwnerInfo,
+      name                      : this._imgName,
       link                      : this._imgLink,
       likes                     : this._imgLikes} = card);
+    this._userId                = userId;
     this._handleCardClick       = handleCardClick;
+    this._handleTrashBtnClick   = handleTrashBtnClick;
     this._cardTemplateSelector  = cardTemplateSelector;
   }
 
@@ -39,14 +42,8 @@ class Card {
       .toggle("element__like-btn_active");
   }
 
-  /**
-   * Handles the deletion of the image card, when delete icon on the image card is clicked.
-   * @param {Object} e The default event object.
-   */
-  _handleDeleteCard = e => {
-    let cardToDelete = e.target.closest(".element");
-    cardToDelete.remove();
-    cardToDelete = null;
+  _checkUserIdentity = () => {
+    return (this._imgOwnerInfo._id === this._userId) ? true : false;
   }
 
   /**
@@ -57,8 +54,13 @@ class Card {
     this._cardDeleteBtn   = this._cardElement.querySelector(".element__delete-btn");
     this._cardImg         = this._cardElement.querySelector(".element__img");
 
+    if(this._checkUserIdentity()){
+      this._cardDeleteBtn.addEventListener("click", e => this._handleTrashBtnClick(e));
+    } else {
+      this._cardDeleteBtn.remove();
+      this._cardDeleteBtn = null;
+    }
     this._cardLikeBtn.addEventListener("click", this._handleLikeIcon);
-    this._cardDeleteBtn.addEventListener("click", this._handleDeleteCard);
     this._cardImg.addEventListener("click", () => this._handleCardClick(this._imgName, this._imgLink));
   }
 
