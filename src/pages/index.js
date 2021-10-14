@@ -114,10 +114,13 @@ api.getInitialCards()
 // Add user info on page load
 const user = new UserInfo({
   userTitleSelector: ".profile__title",
-  userSubtitleSelector: ".profile__subtitle"});
-const currentUserTitle    = profileTitle.textContent;
-const currentUserSubtitle = profileSubtitle.textContent;
-user.setUserInfo(currentUserTitle, currentUserSubtitle);
+  userSubtitleSelector: ".profile__subtitle",
+  userProfilePicSelector: ".profile__avatar"});
+api.getUserData()
+  .then( userData => {
+    const {name, about, avatar, _id} = userData;
+    user.setUserInfo(name, about, avatar, _id);
+  })
 
 // ********************************************************************************************* //
 //                  Initialize all Popups and Set Event Listeners on them                        //
@@ -125,7 +128,11 @@ user.setUserInfo(currentUserTitle, currentUserSubtitle);
 
 // Initialize Edit Profile Popup
 const handleEditProfileFormSubmit = ({title, subtitle}) =>{
-  user.setUserInfo(title, subtitle);
+  api.updateUserData(title, subtitle)
+    .then(updatedUserData => {
+      const {name, about} = updatedUserData;
+      user.setUserInfo(name, about);
+    });
   editProfilePopup.close();
   editProfileFormValidator.toggleButtonState();
 }
@@ -134,7 +141,11 @@ editProfilePopup.setEventListeners();
 
 // Initialize Add Image Popup
 const handleAddImgFormSubmit = ({name, link}) => {
-  imgCardsList.addItem(getNewImgCard({name, link}).generateCard());
+  api.addNewCard(name, link)
+    .then(newCardData => {
+      const {name, link} = newCardData;
+      imgCardsList.addItem(getNewImgCard({name, link}).generateCard());
+    });
   addImgPopup.close();
   addImgFormValidator.toggleButtonState();
 }
@@ -147,9 +158,9 @@ addImgPopup.setEventListeners();
 
 // Add Event Listener to Profile Edit Button
 const handleEditProfile = () => {
-  const {title, subtitle} = user.getUserInfo();
-  editProfileNameInput.value = title;
-  editProfileAboutInput.value = subtitle;
+  const {name, about}           = user.getUserInfo();
+  editProfileNameInput.value    = name;
+  editProfileAboutInput.value   = about;
   editProfileFormValidator.toggleButtonState();
   editProfilePopup.open();
 }

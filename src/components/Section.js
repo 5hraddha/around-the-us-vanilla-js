@@ -33,6 +33,7 @@ class Section {
 
   /**
    * Iterates through the array of data elements and renders each element on a page.
+   * @param {Array} items -  The array of items to render.
    */
   renderItems(items) {
     this.clear();
