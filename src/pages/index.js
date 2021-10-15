@@ -9,7 +9,8 @@ import Api                  from "../components/Api.js";
 import Card                 from "../components/Card.js";
 import FormValidator        from "../components/FormValidator.js";
 import PopupWithForm        from "../components/PopupWithForm.js";
-import PopupWithImage       from "../components/PopupWithImage";
+import PopupWithImage       from "../components/PopupWithImage.js";
+import PopupDeleteCard      from "../components/PopupDeleteCard.js";
 import Section              from "../components/Section.js";
 import UserInfo             from "../components/UserInfo.js"
 
@@ -23,11 +24,7 @@ import {
   profilePicElement } from "../utils/constants.js";
 
 // Import required constants from User Profile
-import {
-  editProfileBtn,
-  profileTitle,
-  profileSubtitle,
-} from "../utils/constants.js";
+import { editProfileBtn } from "../utils/constants.js";
 
 // Import required constants from Edit User Profile Popup
 import {
@@ -42,12 +39,8 @@ import { addImgBtn } from "../utils/constants.js";
 // Import required constants from Add New Image Popup
 import { addImgPopupForm } from "../utils/constants.js";
 
-// Import required constants from Delete Image Popup
-import { deleteImgPopupForm } from "../utils/constants.js";
-
 // Import Form Validation Settings
 import { formValidationSettings } from "../utils/constants.js";
-import PopupDeleteCard from "../components/PopupDeleteCard";
 
 // ********************************************************************************************* //
 //                              Establish connection with API                                    //
@@ -108,6 +101,9 @@ const getNewImgCard = item => {
     },
     handleTrashBtnClick: e => {
       deleteImgPopup.open(e, item._id);
+    },
+    handleLikeBtnClick: (isImgAlreadyLiked, cardId) => {
+      return isImgAlreadyLiked ? api.unlikeCard(cardId) : api.likeCard(cardId);
     }
   };
   const newImg = new Card(newImgCardSetttings, "#element-template", user.getUserInfo().id);

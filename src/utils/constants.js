@@ -14,8 +14,6 @@ export const profilePicElement      = document.querySelector(".profile__avatar")
 
 // Select required DOM Elements from User Profile
 export const editProfileBtn         = document.querySelector(".profile__edit-btn");
-export const profileTitle           = document.querySelector(".profile__title");
-export const profileSubtitle        = document.querySelector(".profile__subtitle");
 
 // Select required DOM Elements from Edit User Profile Popup
 export const editProfilePopup       = document.querySelector(".popup_rel_profile");
@@ -29,7 +27,3 @@ export const addImgBtn              = document.querySelector(".profile__add-btn"
 // Select required DOM Elements from Add New Image Popup
 export const addImgPopup            = document.querySelector(".popup_rel_place");
 export const addImgPopupForm        = addImgPopup.querySelector(".popup__form");
-
-// Select required DOM Elements from Delete Image Popup
-export const deleteImgPopup         = document.querySelector(".popup_rel_delete");
-export const deleteImgPopupForm     = deleteImgPopup.querySelector(".popup__form");

@@ -68,6 +68,28 @@ class Api {
     })
       .then(response => this._checkResponseStatus(response));
   }
+
+  likeCard = cardId => {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: "PUT",
+      headers: {
+        authorization: this._headers.authorization,
+        "Content-Type": "application/json"
+      }
+    })
+      .then(response => this._checkResponseStatus(response));
+  }
+
+  unlikeCard = cardId => {
+    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
+      method: "DELETE",
+      headers: {
+        authorization: this._headers.authorization,
+        "Content-Type": "application/json"
+      }
+    })
+    .then(response => this._checkResponseStatus(response));
+  }
 }
 
 export default Api;
