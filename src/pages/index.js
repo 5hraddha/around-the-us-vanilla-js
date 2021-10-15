@@ -21,7 +21,8 @@ import profilePicUrl        from "../images/profile-avatar.jpeg";
 // Import page logo and profile picture Elements
 import {
   pageLogoElement,
-  profilePicElement } from "../utils/constants.js";
+  profilePicElement
+} from "../utils/constants.js";
 
 // Import required constants from User Profile
 import { editProfileBtn } from "../utils/constants.js";
@@ -38,6 +39,12 @@ import { addImgBtn } from "../utils/constants.js";
 
 // Import required constants from Add New Image Popup
 import { addImgPopupForm } from "../utils/constants.js";
+
+// Import required constants needed for User Avatar
+import { updateAvatarBtn } from "../utils/constants.js";
+
+// Import required constants from Update Avatar Popup
+import { updateAvatarPopupForm } from "../utils/constants.js";
 
 // Import Form Validation Settings
 import { formValidationSettings } from "../utils/constants.js";
@@ -67,8 +74,10 @@ profilePicElement.src = profilePicUrl;
 // Implement form validations for all the forms
 const editProfileFormValidator  = new FormValidator(formValidationSettings, editProfilePopupForm);
 const addImgFormValidator       = new FormValidator(formValidationSettings, addImgPopupForm);
+const updateAvatarFormValidator = new FormValidator(formValidationSettings, updateAvatarPopupForm);
 editProfileFormValidator.enableValidation();
 addImgFormValidator.enableValidation();
+updateAvatarFormValidator.enableValidation();
 
 // ********************************************************************************************* //
 //                            Add Intial User Info on Page Load                                  //
@@ -153,6 +162,18 @@ const handleAddImgFormSubmit = ({name, link}) => {
 const addImgPopup = new PopupWithForm(".popup_rel_place", handleAddImgFormSubmit);
 addImgPopup.setEventListeners();
 
+// Initialize Update Avatar Popup
+const handleUpdateAvatarFormSubmit = ({avatarlink}) => {
+  api.updateUserAvatar(avatarlink)
+    .then(({title, subtitle, avatar}) => {
+      user.setUserInfo(title, subtitle, avatar);
+    });
+    updateUserAvatarPopup.close();
+    updateAvatarFormValidator.toggleButtonState();
+}
+const updateUserAvatarPopup = new PopupWithForm(".popup_rel_avatar", handleUpdateAvatarFormSubmit);
+updateUserAvatarPopup.setEventListeners();
+
 // Initialize Delete Image Popup
 const handleDeleteImgFormSubmit = (cardId, cardToDelete) => {
   api.deleteCard(cardId).
@@ -172,9 +193,10 @@ deleteImgPopup.setEventListeners();
 // Add Event Listener to Profile Edit Button
 const handleEditProfile = () => {
   const {name, about}           = user.getUserInfo();
+  editProfileFormValidator.toggleButtonState();
+  editProfileFormValidator.resetFormValidation();
   editProfileNameInput.value    = name;
   editProfileAboutInput.value   = about;
-  editProfileFormValidator.toggleButtonState();
   editProfilePopup.open();
 }
 editProfileBtn.addEventListener("click", handleEditProfile);
@@ -183,5 +205,14 @@ editProfileBtn.addEventListener("click", handleEditProfile);
 const handleAddImg = () => {
   addImgPopup.open();
   addImgFormValidator.toggleButtonState();
+  addImgFormValidator.resetFormValidation();
 }
 addImgBtn.addEventListener("click", handleAddImg);
+
+// Add Event Listener to Update Avatar Button
+const handleUpdateAvatar = () => {
+  updateUserAvatarPopup.open();
+  updateAvatarFormValidator.toggleButtonState();
+  updateAvatarFormValidator.resetFormValidation();
+}
+updateAvatarBtn.addEventListener("click", handleUpdateAvatar)

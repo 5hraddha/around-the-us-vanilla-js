@@ -21,28 +21,6 @@ class Api {
       .then(response => this._checkResponseStatus(response));
   }
 
-  getUserData = () => {
-    return fetch(`${this._baseUrl}/users/me`, {
-      headers: this._headers,
-    })
-      .then(response => this._checkResponseStatus(response));
-  }
-
-  updateUserData = (title, subtitle) => {
-    return fetch(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        name: title,
-        about: subtitle
-      })
-    })
-      .then(response => this._checkResponseStatus(response));
-  }
-
   addNewCard = (cardName, cardPicUrl) => {
     return fetch(`${this._baseUrl}/cards`,{
       method: "POST",
@@ -87,6 +65,42 @@ class Api {
         authorization: this._headers.authorization,
         "Content-Type": "application/json"
       }
+    })
+    .then(response => this._checkResponseStatus(response));
+  }
+
+  getUserData = () => {
+    return fetch(`${this._baseUrl}/users/me`, {
+      headers: this._headers,
+    })
+      .then(response => this._checkResponseStatus(response));
+  }
+
+  updateUserData = (title, subtitle) => {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: {
+        authorization: this._headers.authorization,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        name: title,
+        about: subtitle
+      })
+    })
+      .then(response => this._checkResponseStatus(response));
+  }
+
+  updateUserAvatar = newAvatarUrl => {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
+      method: "PATCH",
+      headers: {
+        authorization: this._headers.authorization,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        avatar: newAvatarUrl
+      })
     })
     .then(response => this._checkResponseStatus(response));
   }

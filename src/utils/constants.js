@@ -27,3 +27,10 @@ export const addImgBtn              = document.querySelector(".profile__add-btn"
 // Select required DOM Elements from Add New Image Popup
 export const addImgPopup            = document.querySelector(".popup_rel_place");
 export const addImgPopupForm        = addImgPopup.querySelector(".popup__form");
+
+// Select required DOM Elements for updating Avatar
+export const updateAvatarBtn        = document.querySelector(".profile__avatar-update-button");
+
+// Select required DOM Elements from Update Avatar Popup
+export const updateAvatarPopup      = document.querySelector(".popup_rel_avatar");
+export const updateAvatarPopupForm  = updateAvatarPopup.querySelector(".popup__form");
