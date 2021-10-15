@@ -16,13 +16,9 @@ import UserInfo             from "../components/UserInfo.js"
 
 // Import logo and profile picture
 import pageLogoUrl          from "../images/logo.svg";
-import profilePicUrl        from "../images/profile-avatar.jpeg";
 
 // Import page logo and profile picture Elements
-import {
-  pageLogoElement,
-  profilePicElement
-} from "../utils/constants.js";
+import { pageLogoElement } from "../utils/constants.js";
 
 // Import required constants from User Profile
 import { editProfileBtn } from "../utils/constants.js";
@@ -46,8 +42,14 @@ import { updateAvatarBtn } from "../utils/constants.js";
 // Import required constants from Update Avatar Popup
 import { updateAvatarPopupForm } from "../utils/constants.js";
 
-// Import Form Validation Settings
-import { formValidationSettings } from "../utils/constants.js";
+// Import Form Validation Settings and Element Selectors
+import { 
+  formValidationSettings,
+  userInfoSelectors
+} from "../utils/constants.js";
+
+// Import utility functions
+import { setDataLoadingMsg } from "../utils/utils.js";
 
 // ********************************************************************************************* //
 //                              Establish connection with API                                    //
@@ -61,12 +63,11 @@ const api = new Api({
 });
 
 // ********************************************************************************************* //
-//                              Setting pictures on the webpage                                  //
+//                              Setting logo for the webpage                                     //
 // ********************************************************************************************* //
 
-// Set Logo and Profile Picture
+// Set Logo for the webpage
 pageLogoElement.src   = pageLogoUrl;
-profilePicElement.src = profilePicUrl;
 
 // ********************************************************************************************* //
 //                                      Form Validations                                         //
@@ -84,15 +85,13 @@ updateAvatarFormValidator.enableValidation();
 // ********************************************************************************************* //
 
 // Add user info on page load
-const user = new UserInfo({
-  userTitleSelector: ".profile__title",
-  userSubtitleSelector: ".profile__subtitle",
-  userProfilePicSelector: ".profile__avatar"});
+const user = new UserInfo(userInfoSelectors);
 api.getUserData()
   .then( userData => {
     const {name, about, avatar, _id} = userData;
     user.setUserInfo(name, about, avatar, _id);
   })
+  .catch(err => console.log(err));
 
 // ********************************************************************************************* //
 //                            Add Intial Image Cards on Page Load                                //
@@ -105,15 +104,10 @@ imgPopup.setEventListeners();
 const getNewImgCard = item => {
   const newImgCardSetttings = {
     card: item,
-    handleCardClick: (name, link) => {
-      imgPopup.open(name, link);
-    },
-    handleTrashBtnClick: e => {
-      deleteImgPopup.open(e, item._id);
-    },
-    handleLikeBtnClick: (isImgAlreadyLiked, cardId) => {
-      return isImgAlreadyLiked ? api.unlikeCard(cardId) : api.likeCard(cardId);
-    }
+    handleCardClick: (name, link) => imgPopup.open(name, link),
+    handleTrashBtnClick: e => deleteImgPopup.open(e, item._id),
+    handleLikeBtnClick: (isImgAlreadyLiked, cardId) =>
+      isImgAlreadyLiked ? api.unlikeCard(cardId) : api.likeCard(cardId)
   };
   const newImg = new Card(newImgCardSetttings, "#element-template", user.getUserInfo().id);
   return newImg;
@@ -128,9 +122,7 @@ const renderImgCard = item => {
 // Add intial cards on page load
 const imgCardsList = new Section({ renderer: renderImgCard }, ".elements");
 api.getInitialCards()
-  .then(cards => {
-    imgCardsList.renderItems(cards);
-  })
+  .then(cards => imgCardsList.renderItems(cards))
   .catch(err => console.log(err));
 
 // ********************************************************************************************* //
@@ -138,12 +130,15 @@ api.getInitialCards()
 // ********************************************************************************************* //
 
 // Initialize Edit Profile Popup
-const handleEditProfileFormSubmit = ({title, subtitle}) =>{
+const handleEditProfileFormSubmit = ({title, subtitle}) => {
+  setDataLoadingMsg(editProfilePopupForm, "Saving...");
   api.updateUserData(title, subtitle)
     .then(updatedUserData => {
       const {name, about} = updatedUserData;
       user.setUserInfo(name, about);
-    });
+    })
+    .catch(err => console.log(err))
+    .finally(() => setDataLoadingMsg(editProfilePopupForm, "Save"));
   editProfilePopup.close();
   editProfileFormValidator.toggleButtonState();
 }
@@ -152,10 +147,11 @@ editProfilePopup.setEventListeners();
 
 // Initialize Add Image Popup
 const handleAddImgFormSubmit = ({name, link}) => {
+  setDataLoadingMsg(addImgPopupForm, "Creating...");
   api.addNewCard(name, link)
-    .then(newCardData => {
-      imgCardsList.addItem(getNewImgCard(newCardData).generateCard());
-    });
+    .then(newCardData => imgCardsList.addItem(getNewImgCard(newCardData).generateCard()))
+    .catch(err => console.log(err))
+    .finally(() => setDataLoadingMsg(addImgPopupForm, "Create"));
   addImgPopup.close();
   addImgFormValidator.toggleButtonState();
 }
@@ -164,10 +160,11 @@ addImgPopup.setEventListeners();
 
 // Initialize Update Avatar Popup
 const handleUpdateAvatarFormSubmit = ({avatarlink}) => {
+  setDataLoadingMsg(updateAvatarPopupForm, "Saving...");
   api.updateUserAvatar(avatarlink)
-    .then(({title, subtitle, avatar}) => {
-      user.setUserInfo(title, subtitle, avatar);
-    });
+    .then(({title, subtitle, avatar}) => user.setUserInfo(title, subtitle, avatar))
+    .catch(err => console.log(err))
+    .finally(() => setDataLoadingMsg(updateAvatarPopupForm, "Save"));
     updateUserAvatarPopup.close();
     updateAvatarFormValidator.toggleButtonState();
 }
@@ -176,12 +173,13 @@ updateUserAvatarPopup.setEventListeners();
 
 // Initialize Delete Image Popup
 const handleDeleteImgFormSubmit = (cardId, cardToDelete) => {
-  api.deleteCard(cardId).
-    then(() => {
+  api.deleteCard(cardId)
+    .then(() => {
       cardToDelete.remove();
       cardToDelete = null;
       deleteImgPopup.close();
-    });
+    })
+    .catch(err => console.log(err));
 }
 const deleteImgPopup = new PopupDeleteCard(".popup_rel_delete", handleDeleteImgFormSubmit);
 deleteImgPopup.setEventListeners();

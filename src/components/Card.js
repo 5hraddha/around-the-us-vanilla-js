@@ -56,6 +56,10 @@ class Card {
         e.target.classList.toggle('element__like-btn_active');
         this._cardLikeCount.textContent = cardData.likes.length;
       })
+      .catch(err => {
+        console.log(`Error Name: ${err.name}`);
+        console.log(`Error Message: ${err.message}`);
+      });
   }
 
   /**

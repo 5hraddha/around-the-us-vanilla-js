@@ -8,9 +8,15 @@ export const formValidationSettings = {
   errorClass          : "popup__error_visible"
 };
 
-// Select page logo and profile picture Elements
+// Selectors for selecting User Information on the webpage - title, subtitle and avatar
+export const userInfoSelectors = {
+  userTitleSelector: ".profile__title",
+  userSubtitleSelector: ".profile__subtitle",
+  userProfilePicSelector: ".profile__avatar"
+};
+
+// Select page logo Element
 export const pageLogoElement        = document.querySelector(".logo");
-export const profilePicElement      = document.querySelector(".profile__avatar");
 
 // Select required DOM Elements from User Profile
 export const editProfileBtn         = document.querySelector(".profile__edit-btn");
