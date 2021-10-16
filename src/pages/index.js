@@ -43,7 +43,7 @@ import { updateAvatarBtn } from "../utils/constants.js";
 import { updateAvatarPopupForm } from "../utils/constants.js";
 
 // Import Form Validation Settings and Element Selectors
-import { 
+import {
   formValidationSettings,
   userInfoSelectors
 } from "../utils/constants.js";

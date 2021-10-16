@@ -7,7 +7,10 @@
 class UserInfo {
   /**
    * Creates a new UserInfo component.
-   * @param {Object} obj -  An object with the selectors of two elements: one containing the user's name, and another containing the user's job.
+   * @param {Object} obj -  An object with the selectors of three elements:  
+   *                        1. Of the user's name, 
+   *                        2. Of the user's about info and 
+   *                        3. Of the user's avatar.
    */
   constructor({userTitleSelector, userSubtitleSelector, userProfilePicSelector}) {
     this._userTitleElement      = document.querySelector(userTitleSelector);
@@ -36,6 +39,8 @@ class UserInfo {
    * Sets the new information about the user. 
    * @param {string} title - The new name or title of the user.
    * @param {string} subtitle - The new job or subtitle of the user.
+   * @param {string} avatar - The URL of the new avatar of the user.
+   * @param {string} id - The id of the user.
    */
   setUserInfo( title = this._userTitle, 
               subtitle = this._userSubtitle, 

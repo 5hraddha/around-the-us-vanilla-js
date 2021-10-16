@@ -34,7 +34,7 @@ class Popup {
   }
 
   /**
-   * Sets all the event listeners on the popup window
+   * Sets all the event listeners on the popup window.
    */
   setEventListeners() {
     const popupCloseBtn = this._popup.querySelector(".popup__close-btn");

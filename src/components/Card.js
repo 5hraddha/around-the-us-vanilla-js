@@ -7,8 +7,9 @@
 class Card {
   /**
    * Creates a new image card.
-   * @param {Object} obj - An object having new image card details and a callback to handle click on any image
+   * @param {Object} obj - An object having new image card details and callbacks.
    * @param {string} cardTemplateSelector -  The card template element selector.
+   * @param {string} userId -  The id of the current user.
    */
   constructor({card, handleCardClick, handleTrashBtnClick, handleLikeBtnClick}, cardTemplateSelector, userId) {
     ({ _id                      : this._imgId,
@@ -34,6 +35,9 @@ class Card {
       .cloneNode(true);
   }
 
+  /**
+   * Gets all the required DOM Elements from the image card.
+   */
   _getCardDOMElements = () => {
     this._cardImg             = this._cardElement.querySelector(".element__img");
     this._cardTitle           = this._cardElement.querySelector(".element__title");
@@ -42,14 +46,27 @@ class Card {
     this._cardDeleteBtn       = this._cardElement.querySelector(".element__delete-btn");
   }
 
+  /**
+   * Checks if the current user is the owner of the image.
+   * @return {Boolean} true or false.
+   */
   _checkUserIdentity = () => {
     return (this._imgOwnerInfo._id === this._userId) ? true : false;
   }
 
+  /**
+   * Checks if the image has been liked already.
+   * @param {Object} e The default event object.
+   * @return {Boolean} true or false.
+   */
   _isImgAlreadyLiked = e => {
     return e.target.classList.contains('element__like-btn_active');
   }
 
+  /**
+   * Toggles the like icon on the image and updates the likes count accordingly.
+   * @param {Object} e The default event object.
+   */
   _toggleLikeIcon = e => {
     this._handleLikeBtnClick(this._isImgAlreadyLiked(e), this._imgId)
       .then(cardData => {
@@ -63,7 +80,7 @@ class Card {
   }
 
   /**
-   * Sets all the event listeners on the new image card element
+   * Sets all the event listeners on the new image card element.
    */
   _setEventListeners() {
     if(this._checkUserIdentity()){

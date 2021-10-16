@@ -1,15 +1,18 @@
 # Project: Around The U.S.
 ## About the Project
-**Around the U.S.** is a responsive website where a user can have a collection of the pictures of his journey around the US. As of now, the functionalities available on the webpage are:
-1. When the page loads, there are six cards intially.
-2. User can edit and save his profile details. The updated data will be reflected in the webpage but will be lost while page reload.
-3. User can like the images. As of now, the likes will not persist on page reload.
-4. User can add a new card with the title and the link for image. As of now, the newly added card will not persist on page reload.
-5. User can delete any card if he wishes to.
-6. User can also have a closer look of the images by clicking on them.
-7. Live input validation on all the forms.
-8. Users can close the popup by clicking on the overlay, i.e. anywhere outside the popup's borders.
-9. Users can close the popup by pressing the Esc key.
+**Around the U.S.** is a responsive website where a user can have a collection of the pictures of his journey around the US. The webpage interacts with the API endpoints using REST API calls. As of now, the functionalities available on the webpage are:
+1. When the page loads, all the existing image cards from the server loads.
+2. When the page loads, the current user's name and about info are loaded from the server.
+3. User can edit and save his profile details to the server.
+4. User can update his avatar by uploading a new image to the server.
+5. User can like or unlike the images. The status is stored on the server.
+6. User can view the number of likes on an image card.
+7. User can add a new card with the title and the link for the image. The new card is stored on the server.
+8. User can delete the image cards that he has added, if he wishes to. The card would be deleted from the server too.
+9. User can also have a closer look of the images by clicking on them.
+10. Live input validation on all the forms.
+11. Users can close the popup by clicking on the overlay, i.e. anywhere outside the popup's borders.
+12. Users can close the popup by pressing the Esc key.
 
 ## Technologies and Standards Used
 **The technologies that have been used are:**
@@ -41,11 +44,24 @@
 5. **Git Conventional Commits Specification**  
   We are using [Git Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/). It provides an easy set of rules for creating an explicit commit history making it easier for people to contribute to our projects by communicating the nature of changes clearly.
 
+6. **API (Application Programming Interface)**  
+   An API is a set of definitions and protocols for building and integrating application software. It’s sometimes referred to as a contract between an information provider and an information user—establishing the content required from the consumer (the call) and the content required by the producer (the response).
+
+7. **REST API Methods**  
+   [REST guidelines](https://restfulapi.net/http-methods/) suggest using a specific HTTP method on a particular type of call made to the server (though technically it is possible to violate this guideline, yet it is highly discouraged). We have used the following methods:
+    | HTTP Methods | Function |
+    |:---:|---|
+    | HTTP GET | To retrieve resource representation/information only – and not to modify it in any way. |
+    | HTTP POST | To create a new resource into the collection of resources |
+    | HTTP PUT | Primarily to update an existing resource (if the resource does not exist, then API may decide to create a new resource or not). |
+    | HTTP PATCH | To make a partial update on a resource. |
+    | HTTP DELETE | To delete resources (identified by the Request-URI). |
+
 ## Product Specification Document
-You can view the product specification document [here](https://www.figma.com/file/05izwsCh3F3UsBmHfHhUFQ/Sprint-6-Around-The-U.S.?node-id=0%3A1)
+You can view the product specification document [here](https://www.figma.com/file/xQVeb8gprjukPVKXiLXS5T/Sprint-9:-Applied-JavaScript?node-id=1%3A266)
 
 ## Future Improvements
-1. The data on the webpage should persist between page reloads.
+1. The data on the webpage should persist between page reloads - Done.
 2. The user should have ability to add pictures - Done.
 
 ## Demo
