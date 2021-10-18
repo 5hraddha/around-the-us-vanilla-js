@@ -31,9 +31,9 @@ class Api {
    */
   getInitialCards = () => {
     return fetch(`${this._baseUrl}/cards`, {
-      headers: this._headers,
+      headers: this._headers
     })
-      .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 
   /**
@@ -45,16 +45,13 @@ class Api {
   addNewCard = (cardName, cardPicUrl) => {
     return fetch(`${this._baseUrl}/cards`,{
       method: "POST",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json"
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: cardName,
         link: cardPicUrl
       })
     })
-      .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 
   /**
@@ -65,12 +62,9 @@ class Api {
   deleteCard = cardId => {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: "DELETE",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json"
-      }
+      headers: this._headers
     })
-      .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 
   /**
@@ -81,12 +75,9 @@ class Api {
   likeCard = cardId => {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "PUT",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json"
-      }
+      headers: this._headers
     })
-      .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 
   /**
@@ -97,12 +88,9 @@ class Api {
   unlikeCard = cardId => {
     return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
       method: "DELETE",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json"
-      }
+      headers: this._headers
     })
-    .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 
   /**
@@ -113,7 +101,7 @@ class Api {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
     })
-      .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 
   /**
@@ -125,16 +113,13 @@ class Api {
   updateUserData = (title, subtitle) => {
     return fetch(`${this._baseUrl}/users/me`, {
       method: "PATCH",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json"
-      },
+      headers: this._headers,
       body: JSON.stringify({
         name: title,
         about: subtitle
       })
     })
-      .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 
   /**
@@ -145,15 +130,12 @@ class Api {
   updateUserAvatar = newAvatarUrl => {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: "PATCH",
-      headers: {
-        authorization: this._headers.authorization,
-        "Content-Type": "application/json"
-      },
+      headers: this._headers,
       body: JSON.stringify({
         avatar: newAvatarUrl
       })
     })
-    .then(response => this._checkResponseStatus(response));
+      .then(this. _checkResponseStatus);
   }
 }
 
