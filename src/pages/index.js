@@ -109,11 +109,11 @@ const getNewImgCard = item => {
     handleLikeBtnClick: (isImgAlreadyLiked, cardId) => {
       if(isImgAlreadyLiked) {
         api.unlikeCard(cardId)
-          .then(newImg.setNoOfLikes)
+          .then(newImg.renderLikes)
           .catch(err => console.log(err));
       } else {
         api.likeCard(cardId)
-        .then(newImg.setNoOfLikes)
+        .then(newImg.renderLikes)
         .catch(err => console.log(err));
       }
     }

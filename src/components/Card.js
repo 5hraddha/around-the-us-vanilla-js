@@ -17,6 +17,7 @@ class Card {
       name                      : this._imgName,
       link                      : this._imgLink,
       likes                     : this._imgLikes} = card);
+    this._cardData              = card;
     this._userId                = userId;
     this._handleCardClick       = handleCardClick;
     this._handleTrashBtnClick   = handleTrashBtnClick;
@@ -64,13 +65,10 @@ class Card {
   }
 
   /**
-   * Toggles the like icon on the image.
-   * @param {Object} e The default event object.
+   * Checks if current user liked the card
+   * @return {Boolean} true or false.
    */
-  _toggleLikeIcon = e => {
-    this._handleLikeBtnClick(this._isImgAlreadyLiked(e), this._imgId);
-    e.target.classList.toggle('element__like-btn_active');
-  }
+  _checkIfLiked = () => this._imgLikes.some(like => like._id === this._userId);
 
   /**
    * Sets all the event listeners on the new image card element.
@@ -82,16 +80,17 @@ class Card {
       this._cardDeleteBtn.remove();
       this._cardDeleteBtn = null;
     }
-    this._cardLikeBtn.addEventListener("click", this._toggleLikeIcon);
+    this._cardLikeBtn.addEventListener("click", e => this._handleLikeBtnClick(this._isImgAlreadyLiked(e), this._imgId));
     this._cardImg.addEventListener("click", () => this._handleCardClick(this._imgName, this._imgLink));
   }
 
   /**
-   * Sets the number of likes for an image card.
+   * Renders number of likes and change likes button state.
    * @param {Object} cardData The data of the image card.
    */
-  setNoOfLikes = cardData => {
+  renderLikes = cardData => {
     this._cardLikeCount.textContent = cardData.likes.length;
+    this._cardLikeBtn.classList.toggle('element__like-btn_active');
   }
 
   /**
@@ -106,9 +105,8 @@ class Card {
     this._cardImg.src                   = this._imgLink;
     this._cardImg.alt                   = this._imgName;
     this._cardTitle.textContent         = this._imgName;
-    this._cardLikeCount.textContent     = this._imgLikes.length;
-    if(this._imgLikes.some(like => like._id === this._userId)){
-      this._cardLikeBtn.classList.add('element__like-btn_active');
+    if(this._checkIfLiked()){
+      this.renderLikes(this._cardData);
     }
     return this._cardElement;
   }
