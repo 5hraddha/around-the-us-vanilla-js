@@ -106,8 +106,17 @@ const getNewImgCard = item => {
     card: item,
     handleCardClick: (name, link) => imgPopup.open(name, link),
     handleTrashBtnClick: e => deleteImgPopup.open(e, item._id),
-    handleLikeBtnClick: (isImgAlreadyLiked, cardId) =>
-      isImgAlreadyLiked ? api.unlikeCard(cardId) : api.likeCard(cardId)
+    handleLikeBtnClick: (isImgAlreadyLiked, cardId) => {
+      if(isImgAlreadyLiked) {
+        api.unlikeCard(cardId)
+          .then(newImg.setNoOfLikes)
+          .catch(err => console.log(err));
+      } else {
+        api.likeCard(cardId)
+        .then(newImg.setNoOfLikes)
+        .catch(err => console.log(err));
+      }
+    }
   };
   const newImg = new Card(newImgCardSetttings, "#element-template", user.getUserInfo().id);
   return newImg;

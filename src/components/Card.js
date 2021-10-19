@@ -64,19 +64,12 @@ class Card {
   }
 
   /**
-   * Toggles the like icon on the image and updates the likes count accordingly.
+   * Toggles the like icon on the image.
    * @param {Object} e The default event object.
    */
   _toggleLikeIcon = e => {
-    this._handleLikeBtnClick(this._isImgAlreadyLiked(e), this._imgId)
-      .then(cardData => {
-        e.target.classList.toggle('element__like-btn_active');
-        this._cardLikeCount.textContent = cardData.likes.length;
-      })
-      .catch(err => {
-        console.log(`Error Name: ${err.name}`);
-        console.log(`Error Message: ${err.message}`);
-      });
+    this._handleLikeBtnClick(this._isImgAlreadyLiked(e), this._imgId);
+    e.target.classList.toggle('element__like-btn_active');
   }
 
   /**
@@ -91,6 +84,14 @@ class Card {
     }
     this._cardLikeBtn.addEventListener("click", this._toggleLikeIcon);
     this._cardImg.addEventListener("click", () => this._handleCardClick(this._imgName, this._imgLink));
+  }
+
+  /**
+   * Sets the number of likes for an image card.
+   * @param {Object} cardData The data of the image card.
+   */
+  setNoOfLikes = cardData => {
+    this._cardLikeCount.textContent = cardData.likes.length;
   }
 
   /**
