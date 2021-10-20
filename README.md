@@ -1,5 +1,15 @@
+<!-- omit in toc -->
 # Project: Around The U.S.
+- [About the Project](#about-the-project)
+- [Technologies and Standards Used](#technologies-and-standards-used)
+- [Product Specification Document](#product-specification-document)
+- [Future Improvements](#future-improvements)
+- [Live Demo](#live-demo)
+
 ## About the Project
+
+![around-the-us](https://raw.githubusercontent.com/5hraddha/misc/master/images/around-the-us.png)
+
 **Around the U.S.** is a responsive website where a user can have a collection of the pictures of his journey around the US. The webpage interacts with the API endpoints using REST API calls. As of now, the functionalities available on the webpage are:
 1. When the page loads, all the existing image cards from the server loads.
 2. When the page loads, the current user's name and about info are loaded from the server.
@@ -64,5 +74,5 @@ You can view the product specification document [here](https://www.figma.com/fil
 1. The data on the webpage should persist between page reloads - Done.
 2. The user should have ability to add pictures - Done.
 
-## Demo
+## Live Demo
 [Enjoy the live project](https://5hraddha.github.io/web_project_4/index.html)
