@@ -75,4 +75,4 @@ You can view the product specification document [here](https://www.figma.com/fil
 2. The user should have ability to add pictures - Done.
 
 ## Live Demo
-[Enjoy the live project](https://5hraddha.github.io/web_project_4/index.html)
+[Enjoy the live project](https://5hraddha.github.io/around-the-us-vanilla-js/index.html)
